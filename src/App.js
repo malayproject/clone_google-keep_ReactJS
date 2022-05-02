@@ -19,7 +19,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseFolder/FirebaseApp";
 import SettingsPage from "./pages/SettingsPage";
 
-function App({ isAuthenticated, currUser, setAuthState }) {
+function App({ isAuthenticated, currUser, theme, setAuthState }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function App({ isAuthenticated, currUser, setAuthState }) {
   }, []);
 
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <Routes>
         <Route path="/" element={<Landingpage />}>
           <Route path="user-notes" element={isAuthenticated && <UserHome />}>
@@ -61,6 +61,7 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     currUser: state.auth.currUser,
+    theme: state.app.theme,
   };
 };
 

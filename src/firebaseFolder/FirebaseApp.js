@@ -10,6 +10,6 @@ export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 console.log(auth);
 
-const usersColRef = collection(db, "users");
+export const usersColRef = collection(db, "users");
 
 export default app;

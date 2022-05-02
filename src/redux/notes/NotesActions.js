@@ -1,10 +1,22 @@
 import * as actionTypes from "./NotesActionTypes";
 
-export const getNotes = (notes) => {
+export const setActiveNotes = (activeNotes) => {
   return {
-    type: actionTypes.GET_NOTES,
-    payload: notes,
+    type: actionTypes.SET_ACTIVE_NOTES,
+    payload: activeNotes,
   };
 };
 
-// const
+export const setArchivedNotes = (archivedNotes) => {
+  return {
+    type: actionTypes.SET_ARCHIVED_NOTES,
+    payload: archivedNotes,
+  };
+};
+
+export const setTrashedNotes = (trashedNotes) => {
+  return {
+    type: actionTypes.SET_TRASHED_NOTES,
+    payload: trashedNotes,
+  };
+};

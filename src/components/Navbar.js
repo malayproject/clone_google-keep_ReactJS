@@ -20,7 +20,7 @@ const Navbar = ({ userImg, theme, logout }) => {
             }
             className="brandImg"
           />
-          <h2 className="">Clone Keep</h2>
+          <div className="">Clone Keep</div>
         </div>
       </div>
       <div className="right">
