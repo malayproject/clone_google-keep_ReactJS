@@ -16,11 +16,11 @@ const UserHome = ({ theme }) => {
           </NavLink>
           <NavLink to="/user-notes/archive" className={`sideLink ${theme}`}>
             <FaArchive className="icon" />
-            <div>Archived</div>
+            <div>Archive</div>
           </NavLink>
           <NavLink to="/user-notes/trash" className={`sideLink ${theme}`}>
             <FaTrash className="icon" />
-            <div>Trashed</div>
+            <div>Trash</div>
           </NavLink>
         </div>
         <Outlet />

@@ -12,7 +12,7 @@
 }
 
 .App.dark{
-  background-color: #242628;
+  background-color: #212325;
 }
 
 .landingPage  {
@@ -22,7 +22,7 @@
 
 .userHome  {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: transparent;
 }
 
@@ -63,7 +63,7 @@
 .navbar .left .brandImg  {
   width: clamp(2rem, 6vw, 2.5rem);
 }
-.navbar .left div{
+.navbar .left .brandCon div{
   margin: 0;
   color: #555;
   font-size: 1.5rem;
@@ -71,7 +71,7 @@
   height: fit-content;
 }
 
-.navbar.dark .left div{
+.navbar.dark .left .brandCon div{
   margin: 0;
   color: #ddd;
 }
@@ -106,6 +106,22 @@
   border-radius: 50%;
 }
 
+.iconCon{
+  position: relative;
+}
+
+.iconCon .info{
+  display: none;
+  position: absolute;
+  font-size: 0.8rem;
+  background-color: rgb(75, 75, 75);
+  width: max-content;
+  top: 3rem;
+  color: rgb(230, 230, 230);
+  border-radius: 0.3rem;
+  word-wrap: normal;
+  padding: 0.2rem 0.4rem;
+}
 
 .iconCon:hover{
   background-color: rgb(230, 230, 230);
@@ -117,6 +133,10 @@
 
 .iconCon:hover .icon{
   color: rgb(80, 80, 80);
+}
+
+.iconCon:hover .info{
+  display: block;
 }
 
 .iconCon.dark:hover .icon{
@@ -131,11 +151,12 @@
   display: flex;
   flex-direction: row;
   background-color: transparent;
+  /* min-height: inherit; */
 }
 
 .sidebar  {
-  width: clamp(16rem, 22%, 20rem);
-  min-height: 100vh;
+  width: clamp(20rem, 22%, 22rem);
+  min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
@@ -212,3 +233,399 @@
 .sideLink:first-child {
   margin-top: 2rem;
 }
+
+/* .archivedBody {
+  display: grid;
+  padding: 5rem;
+  grid-template: auto / repeat(3, 1fr);
+  column-gap: 1rem;
+  row-gap: 1rem;
+} */
+
+.notesCon, .trashedCon, .archivedCon {
+  width: calc(100vw - clamp(16rem, 22%, 20rem));
+  min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
+  /* border: 1px solid green; */
+  padding: 2rem 3rem;
+}
+
+.createNoteCon  {
+  /* background-color: #ddd; */
+  padding-bottom: 2rem;
+}
+
+.createOrEditNote {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.createNoteCon .minimized  {
+  width: clamp(22rem, 50%, 25rem);
+  border: none;
+  border-radius: 0.5rem;
+  padding-left: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  height: 3.5rem;
+  box-shadow: 0 0.05rem 0.3rem grey;
+  background-color: transparent;
+}
+
+.createNoteCon .minimized::placeholder{
+  color: rgb(99, 99, 99);
+
+}
+
+.palette{
+  position: relative;
+  z-index: 0;
+}
+
+.palette .backgroundPalette {
+  position: absolute;
+  top: 2rem;
+  left: -5rem;
+  background-color: rgb(248,248,248);
+  z-index: 1;
+  width: 32rem;
+  height: 7rem;
+  background-color: rgb(248, 248, 248);
+  border-radius: 0.5rem;
+  box-shadow: 0rem 0.0rem 0.3rem grey;
+}
+
+.palette .backgroundPalette.dark{
+  background-color: #202124;
+}
+
+.backgroundPaletteCon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.backgroundPaletteCon > * {
+  width: 100%;
+  height: 3.5rem ;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* gap: 0.3rem; */
+}
+
+.backgroundColorCon .backgroundColor {
+  border: 0.15rem solid;
+  height: 2.2rem;
+  width: 2.2rem;
+  border-radius: 1.1rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.backgroundColorCon .backgroundColor:hover {
+  border: 1px solid black;
+}
+.backgroundColorCon .backgroundColor.dark:hover {
+  border: 1px solid rgb(211,211,211);
+}
+.backgroundColorCon .backgroundColor.selected {
+  border: 2px solid rgb(0, 219, 0);
+}
+
+.backgroundColorCon {
+  gap: 0.35rem;
+}
+
+.no-color {
+  width: 1.6rem;
+  
+}
+.no-color.dark {
+  width: 1.6rem;
+  /* color: rgb(248,248,248); */
+  fill : rgb(211,211,211);
+}
+.no-image {
+  font-size: 1.6rem;
+}
+.no-image.dark {
+  font-size: 1.6rem;
+  color: rgb(211,211,211);
+}
+
+.backgroundImageCon {
+  border-top: 0.1rem solid grey;
+  width: fit-content;
+  gap: 0.35rem;
+}
+.backgroundImageCon .backgroundImage {
+  border: 1px solid;
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: 1.352rem;
+  border: none;
+  object-fit: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.backgroundImageCon .backgroundImage:hover {
+  border: 1px solid black;
+}
+.backgroundImageCon .backgroundImage.dark:hover {
+  border: 1px solid rgb(211,211,211);
+}
+.backgroundImageCon .backgroundImage.selected {
+  border: 2px solid rgb(0, 219, 0);
+}
+
+.newNote  {
+  width: clamp(40rem, 50%, 50rem);
+  padding: 1rem;
+}
+
+.newNote .header{
+  display: flex;
+
+  align-items: left;
+}
+
+.newNote .header .newTitle{
+  width: 92%;
+  font-size: 1.15rem;
+  min-height: 3rem;
+  max-height: 3rem;
+  word-wrap: normal;
+  text-align: left;
+  border: none;
+  background-color: transparent;
+  overflow: auto;
+  cursor: text;
+  resize: none;
+  color: #bbb;
+  font-weight: 600;
+}
+
+.newNote .header .newTitle:focus{
+  outline: none;
+}
+
+.newNote .newDescription {
+  width: 100%;
+  font-size: 1rem;
+  /* min-height: 5rem; */
+  max-height: 30rem;
+  word-wrap: normal;
+  border: none;
+  background-color: transparent;
+  overflow: auto;
+  text-align: left;
+  resize: none;
+  color: #aaa;
+}
+
+.newNote .newDescription:focus{
+  outline: none;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+  content:attr(data-text);
+  color: grey;
+}
+
+::-webkit-scrollbar {
+  width: 0.7rem;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ddd;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #777;
+}
+
+.newNote .actions .right .bottom  {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.newNote .right button {
+  visibility: hidden;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 0 1.5rem;
+  color: grey;
+  letter-spacing: 0.05rem;
+  font-weight: 600;
+  background-color: transparent;
+}
+
+.newNote .right button:hover {
+  background-color: rgb(230, 230, 230);
+  color: rgb(80, 80, 80);
+}
+
+.newNote .right button.dark:hover {
+  background-color: rgb(75, 75, 75);
+  color: rgb(224, 224, 224);
+}
+
+.newNote:hover .right button{
+  visibility: visible;
+}
+
+.pinnedNotesCon, .unPinnedNotesCon {
+  padding-top: 3rem;
+}
+.pinnedNotesHeader, .unPinnedNotesHeader  {
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.04rem; 
+  padding: 0 0 0.5rem 1.2rem;
+}
+
+.trashedHeader  {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  background-color: transparent;
+}
+
+.trashedHeader .header-note {
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.03rem;
+}
+
+.trashedHeader button  {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  color: rgb(0, 170, 170);
+  font-weight: 600;
+  background-color: transparent;
+}
+
+.trashedHeader button:hover {
+  background-color: rgb(218, 247, 255);
+}
+
+.trashedCon.dark  *, .archivedCon.dark  *, .pinnedNotesCon.dark *, .unPinnedNotesCon.dark *{
+  color: rgb(211, 211, 211);
+}
+
+.trashedCon.dark  , .archivedCon.dark  *{
+  color: rgb(211, 211, 211);
+}
+
+/* .trashedCon.dark .trashedHeader .header-note {
+  color: rgb(211, 211, 211);
+}  */
+
+.trashedBody, .archivedBody, .pinnedNotesBody, .unPinnedNotesBody  {
+  width: 100%;
+  display: grid;
+  justify-content: flex-start;
+  grid-template-columns: repeat(auto-fit, 20rem);
+  /* grid-auto-rows: auto; */
+  grid-auto-rows: minmax(4rem, max-content);
+  grid-auto-flow: row;
+  column-gap: 1.5rem;
+  row-gap: 1rem;
+  /* border: 1px solid red; */
+}
+
+.note{
+  border: 1px solid rgb(168, 168, 168);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.note:hover  {
+  box-shadow: 0rem 0.1rem 0.4rem rgb(189, 189, 189);
+}
+
+.note.dark  {
+  border: 1px solid rgb(128, 128, 128);
+}
+
+.note .header{
+  position: relative;
+}
+
+.note .header .iconCon{
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  width: clamp(2.4rem, 3.5vw, 2.5rem);
+  height: clamp(2.4rem, 3.5vw, 2.5rem);
+}
+
+.note .title {
+  font-size: 1.4rem;
+  text-align: left;
+  padding: 0 0 0.5rem 0;
+  max-height: 6rem;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+}
+
+.note .description {
+  font-size: 1.2rem;
+  text-align: left;
+  padding: 0 0 0.5rem 0;
+  max-height: 6rem;
+}
+
+.note .actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem 0 0 0;
+}
+
+.note .actions .left{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+ 
+.note .iconCon{
+  width: clamp(2rem, 3.5vw, 2.1rem);
+  height: clamp(2rem, 3.5vw, 2.1rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  visibility: hidden;
+}
+
+
+
+.note:hover .iconCon  {
+  visibility: visible;
+}
+
+
+.note .icon  {
+  color: grey;
+  font-size: 1.4rem;
+}
+
+

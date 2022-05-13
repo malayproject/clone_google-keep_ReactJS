@@ -4,7 +4,7 @@ import { logout } from "../redux/auth/AuthActions";
 import { FaBars, FaCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = ({ userImg, theme, logout }) => {
+const Navbar = ({ currUser, theme, logout }) => {
   const navigate = useNavigate();
 
   return (
@@ -12,6 +12,7 @@ const Navbar = ({ userImg, theme, logout }) => {
       <div className="left">
         <div className={`iconCon ${theme} hoverable`}>
           <FaBars className="icon" />
+          <div className="info">Sidebar menu</div>
         </div>
         <div className="brandCon">
           <img
@@ -29,9 +30,21 @@ const Navbar = ({ userImg, theme, logout }) => {
           onClick={() => navigate("/settings")}
         >
           <FaCog className="icon" />
+          <div className="info">Settings</div>
         </div>
         <div className={`iconCon ${theme} hoverable`}>
-          <img src={userImg} className="profileImg" onClick={logout} />
+          <img
+            src={currUser.photoURL}
+            className="profileImg"
+            onClick={logout}
+          />
+          <div className="info">
+            User Account
+            <br />
+            {currUser.displayName}
+            <br />
+            {currUser.email}
+          </div>
         </div>
       </div>
     </div>
@@ -40,8 +53,8 @@ const Navbar = ({ userImg, theme, logout }) => {
 
 const mapStateToProps = (state) => {
   return {
-    userImg: state.auth.currUser.photoURL,
     theme: state.app.theme,
+    currUser: state.auth.currUser,
   };
 };
 

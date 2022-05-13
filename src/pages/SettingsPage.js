@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { setDarkTheme, setLightTheme } from "../redux/app/AppActions";
 
 const Settingspage = ({ theme, setDark, setLight }) => {
-  const navigate = useNavigate(-1);
+  const navigate = useNavigate();
   return (
     <div className="settingsPage">
       <label>Theme:</label>
@@ -17,7 +17,7 @@ const Settingspage = ({ theme, setDark, setLight }) => {
           dark
         </button>
       )}
-      <button onClick={() => navigate("/user-notes")}>Ok</button>
+      <button onClick={() => navigate(-1)}>Ok</button>
     </div>
   );
 };

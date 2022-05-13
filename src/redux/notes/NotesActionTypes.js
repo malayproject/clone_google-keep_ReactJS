@@ -1,7 +1,7 @@
 export const SET_ACTIVE_NOTES = "SET_ACTIVE_NOTES";
 export const SET_ARCHIVED_NOTES = "SET_ARCHIVED_NOTES";
 export const SET_TRASHED_NOTES = "SET_TRASHED_NOTES";
-// export const ADD_NOTE = "ADD_NOTE";
+
 // export const EDIT_NOTE = "EDIT_NOTE";
 // export const PIN_NOTE = "PIN_NOTE";
 // export const UNPIN_NOTE = "UNPIN_NOTE";

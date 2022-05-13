@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
+    "draft-js": "^0.11.7",
     "firebase": "^9.6.11",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -16,8 +17,10 @@
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "url": "^0.11.0",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "https://malayproject.github.io/clone_google-keep_ReactJS",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -41,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }
