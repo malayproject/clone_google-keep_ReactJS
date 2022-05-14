@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { IoIosColorPalette } from "react-icons/io";
 import { BiReset } from "react-icons/bi";
 import { MdArchive, MdDelete, MdContentCopy } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { connect } from "react-redux";
-import { Editor, EditorState } from "draft-js";
 import { addDoc, collection } from "firebase/firestore";
 import { usersColRef } from "../firebaseFolder/FirebaseApp";
 import {
@@ -16,6 +15,7 @@ import {
 } from "../redux/app/AppActions";
 import { getAndSetActiveNotes } from "../redux/notes/NotesActions";
 import BackgroundPalette from "./BackgroundPalette";
+import { backImages, colors } from "./BackgroundPaletteData";
 
 const CreateOrEditNote = ({
   theme,
@@ -30,6 +30,7 @@ const CreateOrEditNote = ({
     title: "",
     description: "",
     colorKey: 0,
+    backImageKey: 0,
     isPinned: false,
     isArchived: false,
     isTrashed: false,
@@ -37,6 +38,8 @@ const CreateOrEditNote = ({
     createdOn: "",
   };
   const [newNoteState, setNewNoteState] = useState(initialNewNoteState);
+
+  const backgroundPaletteRef = useRef();
 
   const addNoteToDB = async () => {
     console.log("inside addNoteToDB");
@@ -48,6 +51,7 @@ const CreateOrEditNote = ({
           title: newNoteState.title,
           description: newNoteState.description,
           colorKey: newNoteState.colorKey,
+          backImageKey: newNoteState.backImageKey,
           editedOn: new Date().toString(),
           createdOn: new Date().toString(),
           isPinned: newNoteState.isPinned,
@@ -126,11 +130,10 @@ const CreateOrEditNote = ({
   const handleNoteBackground = (e) => {
     console.log("inside handleNoteBackground");
     console.dir(e.target);
+    console.log(backgroundPaletteRef.current);
     if (
-      e.target.className === "backgroundColorCon" ||
-      e.target.className === "backgroundImageCon" ||
-      e.target.parentElement.className === "backgroundColorCon" ||
-      e.target.parentElement.className === "backgroundImageCon"
+      e.target == backgroundPaletteRef.current ||
+      backgroundPaletteRef.current?.contains?.(e.target)
     ) {
       console.log(e.target);
       return;
@@ -140,9 +143,42 @@ const CreateOrEditNote = ({
       : setIsBackgroundPaletteActive();
   };
 
+  const handleColKey = (selectedColKey) => {
+    setNewNoteState((prev) => ({
+      ...prev,
+      colorKey: selectedColKey,
+      editedOn: new Date().toString(),
+    }));
+  };
+
+  const handleImgKey = (selectedImgKey) => {
+    setNewNoteState((prev) => ({
+      ...prev,
+      backImageKey: selectedImgKey,
+      editedOn: new Date().toString(),
+    }));
+  };
+
   return (
     <div className="createOrEditNote">
-      <div className="newNote note">
+      <div
+        className="newNote note"
+        style={{
+          backgroundColor:
+            colors[newNoteState.colorKey][`${newNoteState.colorKey}_${theme}`],
+          backgroundImage:
+            "url(" +
+            backImages[newNoteState.backImageKey][
+              `${newNoteState.backImageKey}_${theme}`
+            ] +
+            ")",
+          backgroundSize: "cover",
+          backgroundPositionY: "bottom",
+          border:
+            "1px solid " +
+            colors[newNoteState.colorKey][`${newNoteState.colorKey}_${theme}`],
+        }}
+      >
         <div className="header">
           <textarea
             placeholder="title"
@@ -185,7 +221,15 @@ const CreateOrEditNote = ({
             >
               <IoIosColorPalette className="icon" />
               <div className="info">Background options</div>
-              {isBackgroundPaletteActive && <BackgroundPalette />}
+              {isBackgroundPaletteActive && (
+                <BackgroundPalette
+                  colKey={newNoteState.colorKey}
+                  imgKey={newNoteState.backImageKey}
+                  handleColKey={handleColKey}
+                  handleImgKey={handleImgKey}
+                  ref={backgroundPaletteRef}
+                />
+              )}
               {/* <BackgroundPalette /> */}
             </div>
             <div

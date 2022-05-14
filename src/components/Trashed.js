@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { usersColRef } from "../firebaseFolder/FirebaseApp";
 import { getTrashedNotes } from "../redux/notes/NotesActions";
 import { MdRestoreFromTrash, MdDeleteForever } from "react-icons/md";
+import { backImages, colors } from "./BackgroundPaletteData";
 
 const Trashed = ({ currUser, notes, theme, getTrashedNotes }) => {
   const deleteForever = async (noteId) => {
@@ -61,7 +62,29 @@ const Trashed = ({ currUser, notes, theme, getTrashedNotes }) => {
       <div className="trashedBody">
         {notes.trashedNotes?.map((trashedNote) => {
           return (
-            <div className="trashedNote note" key={trashedNote.id}>
+            <div
+              className="trashedNote note"
+              key={trashedNote.id}
+              style={{
+                backgroundColor:
+                  colors[trashedNote.colorKey][
+                    `${trashedNote.colorKey}_${theme}`
+                  ],
+                backgroundImage:
+                  "url(" +
+                  backImages[trashedNote.backImageKey][
+                    `${trashedNote.backImageKey}_${theme}`
+                  ] +
+                  ")",
+                backgroundSize: "cover",
+                backgroundPositionY: "bottom",
+                border:
+                  "1px solid " +
+                  colors[trashedNote.colorKey][
+                    `${trashedNote.colorKey}_${theme}`
+                  ],
+              }}
+            >
               <div className="header">
                 <div className="title">{trashedNote.title}</div>
               </div>

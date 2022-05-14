@@ -7,7 +7,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { usersColRef } from "../firebaseFolder/FirebaseApp";
 import {
@@ -23,6 +23,7 @@ import {
   resetIsBackgroundPaletteActive,
 } from "../redux/app/AppActions";
 import BackgroundPalette from "./BackgroundPalette";
+import { backImages, colors } from "./BackgroundPaletteData";
 
 const Archived = ({
   currUser,
@@ -33,6 +34,8 @@ const Archived = ({
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
 }) => {
+  const backgroundPaletteRef = useRef();
+
   const deleteNote = async (noteId) => {
     try {
       await updateDoc(
@@ -91,11 +94,11 @@ const Archived = ({
   const handleNoteBackground = (e) => {
     console.log("inside handleNoteBackground");
     console.dir(e.target);
+    console.log(backgroundPaletteRef.current);
+    console.log(backgroundPaletteRef.current?.contains?.(e.target));
     if (
-      e.target.className === "backgroundColorCon" ||
-      e.target.className === "backgroundImageCon" ||
-      e.target.parentElement.className === "backgroundColorCon" ||
-      e.target.parentElement.className === "backgroundImageCon"
+      e.target == backgroundPaletteRef.current ||
+      backgroundPaletteRef.current?.contains?.(e.target)
     ) {
       console.log(e.target);
       return;
@@ -103,6 +106,36 @@ const Archived = ({
     isBackgroundPaletteActive
       ? resetIsBackgroundPaletteActive()
       : setIsBackgroundPaletteActive();
+  };
+
+  const handleNoteColKey = async (selectedColKey, noteId) => {
+    try {
+      await updateDoc(
+        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
+        {
+          colorKey: selectedColKey,
+          editedOn: new Date().toString(),
+        }
+      );
+      getAndSetArchivedNotes(currUser.uid);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleNoteImgKey = async (selectedImgKey, noteId) => {
+    try {
+      await updateDoc(
+        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
+        {
+          backImageKey: selectedImgKey,
+          editedOn: new Date().toString(),
+        }
+      );
+      getAndSetArchivedNotes(currUser.uid);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {
@@ -118,7 +151,29 @@ const Archived = ({
       <div className="archivedBody">
         {notes.archivedNotes?.map((archivedNote) => {
           return (
-            <div className="archivedNote note" key={archivedNote.id}>
+            <div
+              className="archivedNote note"
+              key={archivedNote.id}
+              style={{
+                backgroundColor:
+                  colors[archivedNote.colorKey][
+                    `${archivedNote.colorKey}_${theme}`
+                  ],
+                backgroundImage:
+                  "url(" +
+                  backImages[archivedNote.backImageKey][
+                    `${archivedNote.backImageKey}_${theme}`
+                  ] +
+                  ")",
+                backgroundSize: "cover",
+                backgroundPositionY: "bottom",
+                border:
+                  "1px solid " +
+                  colors[archivedNote.colorKey][
+                    `${archivedNote.colorKey}_${theme}`
+                  ],
+              }}
+            >
               <div className="header">
                 <div className="title">{archivedNote.title}</div>
                 <div className={`iconCon ${theme} hoverable`}>
@@ -137,7 +192,16 @@ const Archived = ({
                   >
                     <IoIosColorPalette className="icon" />
                     <div className="info">Background options</div>
-                    {isBackgroundPaletteActive && <BackgroundPalette />}
+                    {isBackgroundPaletteActive && (
+                      <BackgroundPalette
+                        colKey={archivedNote.colorKey}
+                        imgKey={archivedNote.backImageKey}
+                        handleNoteColKey={handleNoteColKey}
+                        handleNoteImgKey={handleNoteImgKey}
+                        ref={backgroundPaletteRef}
+                        noteId={archivedNote.id}
+                      />
+                    )}
                   </div>
                   <div
                     className={`iconCon ${theme} hoverable`}

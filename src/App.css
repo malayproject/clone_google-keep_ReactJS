@@ -268,7 +268,7 @@
   font-size: 1.1rem;
   font-weight: 500;
   height: 3.5rem;
-  box-shadow: 0 0.05rem 0.3rem grey;
+  box-shadow: 0 0rem 0.3rem grey;
   background-color: transparent;
 }
 
@@ -279,7 +279,6 @@
 
 .palette{
   position: relative;
-  z-index: 0;
 }
 
 .palette .backgroundPalette {
@@ -553,12 +552,13 @@
 
 .note{
   border: 1px solid rgb(168, 168, 168);
+  box-shadow: 0rem 0rem 0.3rem rgb(189, 189, 189);
   border-radius: 0.5rem;
   padding: 0.5rem;
 }
 
 .note:hover  {
-  box-shadow: 0rem 0.1rem 0.4rem rgb(189, 189, 189);
+  box-shadow: 0rem 0rem 0.3rem rgb(189, 189, 189);
 }
 
 .note.dark  {

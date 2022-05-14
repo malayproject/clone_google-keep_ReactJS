@@ -49,7 +49,7 @@ export const colors = [
   },
 ];
 
-export const backImages = [
+export const backImageThumbs = [
   {
     "0_dark": "transparent",
     "0_": "transparent",
@@ -98,5 +98,49 @@ export const backImages = [
     "9_dark":
       "https://www.gstatic.com/keep/backgrounds/celebration_dark_thumb_0715.svg",
     "9_": "https://www.gstatic.com/keep/backgrounds/celebration_light_thumb_0715.svg",
+  },
+];
+
+export const backImages = [
+  {
+    "0_dark": "transparent",
+    "0_": "transparent",
+  },
+  {
+    "1_dark": "https://www.gstatic.com/keep/backgrounds/grocery_dark_0609.svg",
+    "1_": "https://www.gstatic.com/keep/backgrounds/grocery_light_0609.svg",
+  },
+  {
+    "2_dark": "https://www.gstatic.com/keep/backgrounds/food_dark_0609.svg",
+    "2_": "https://www.gstatic.com/keep/backgrounds/food_light_0609.svg",
+  },
+  {
+    "3_dark": "https://www.gstatic.com/keep/backgrounds/music_dark_0609.svg",
+    "3_": "https://www.gstatic.com/keep/backgrounds/music_light_0609.svg",
+  },
+  {
+    "4_dark": "https://www.gstatic.com/keep/backgrounds/recipe_dark_0609.svg",
+    "4_": "https://www.gstatic.com/keep/backgrounds/recipe_light_0609.svg",
+  },
+  {
+    "5_dark": "https://www.gstatic.com/keep/backgrounds/notes_dark_0714.svg",
+    "5_": "https://www.gstatic.com/keep/backgrounds/notes_light_0609.svg",
+  },
+  {
+    "6_dark": "https://www.gstatic.com/keep/backgrounds/places_dark_0609.svg",
+    "6_": "https://www.gstatic.com/keep/backgrounds/places_light_0609.svg",
+  },
+  {
+    "7_dark": "https://www.gstatic.com/keep/backgrounds/travel_dark_0609.svg",
+    "7_": "https://www.gstatic.com/keep/backgrounds/travel_light_0609.svg",
+  },
+  {
+    "8_dark": "https://www.gstatic.com/keep/backgrounds/video_dark_0609.svg",
+    "8_": "https://www.gstatic.com/keep/backgrounds/video_light_0609.svg",
+  },
+  {
+    "9_dark":
+      "https://www.gstatic.com/keep/backgrounds/celebration_dark_0714.svg",
+    "9_": "https://www.gstatic.com/keep/backgrounds/celebration_light_0714.svg",
   },
 ];

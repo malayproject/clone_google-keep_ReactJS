@@ -26,6 +26,7 @@ import {
 } from "firebase/firestore";
 import { usersColRef } from "../firebaseFolder/FirebaseApp";
 import BackgroundPalette from "./BackgroundPalette";
+import { backImages, colors } from "./BackgroundPaletteData";
 
 const Notes = ({
   notes,
@@ -179,7 +180,29 @@ const Notes = ({
           <div className="pinnedNotesBody">
             {notes.activeNotes?.pinned.map((pinnedNote) => {
               return (
-                <div className="pinnedNote note" key={pinnedNote.id}>
+                <div
+                  className="pinnedNote note"
+                  key={pinnedNote.id}
+                  style={{
+                    backgroundColor:
+                      colors[pinnedNote.colorKey][
+                        `${pinnedNote.colorKey}_${theme}`
+                      ],
+                    backgroundImage:
+                      "url(" +
+                      backImages[pinnedNote.backImageKey][
+                        `${pinnedNote.backImageKey}_${theme}`
+                      ] +
+                      ")",
+                    backgroundSize: "cover",
+                    backgroundPositionY: "bottom",
+                    border:
+                      "1px solid " +
+                      colors[pinnedNote.colorKey][
+                        `${pinnedNote.colorKey}_${theme}`
+                      ],
+                  }}
+                >
                   <div className="header">
                     <div className="title">{pinnedNote.title}</div>
                     <div
@@ -201,7 +224,7 @@ const Notes = ({
                       >
                         <IoIosColorPalette className="icon" />
                         <div className="info">Background options</div>
-                        {true && <BackgroundPalette />}
+                        {isBackgroundPaletteActive && <BackgroundPalette />}
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}
@@ -247,7 +270,29 @@ const Notes = ({
           <div className="unPinnedNotesBody">
             {notes.activeNotes?.unPinned.map((unPinnedNote) => {
               return (
-                <div className="unPinnedNote note" key={unPinnedNote.id}>
+                <div
+                  className="unPinnedNote note"
+                  key={unPinnedNote.id}
+                  style={{
+                    backgroundColor:
+                      colors[unPinnedNote.colorKey][
+                        `${unPinnedNote.colorKey}_${theme}`
+                      ],
+                    backgroundImage:
+                      "url(" +
+                      backImages[unPinnedNote.backImageKey][
+                        `${unPinnedNote.backImageKey}_${theme}`
+                      ] +
+                      ")",
+                    backgroundSize: "cover",
+                    backgroundPositionY: "bottom",
+                    border:
+                      "1px solid " +
+                      colors[unPinnedNote.colorKey][
+                        `${unPinnedNote.colorKey}_${theme}`
+                      ],
+                  }}
+                >
                   <div className="header">
                     <div className="title">{unPinnedNote.title}</div>
                     <div
