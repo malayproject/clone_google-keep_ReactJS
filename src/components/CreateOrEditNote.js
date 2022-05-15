@@ -222,13 +222,14 @@ const CreateOrEditNote = ({
               <IoIosColorPalette className="icon" />
               <div className="info">Background options</div>
               {isBackgroundPaletteActive && (
-                <BackgroundPalette
-                  colKey={newNoteState.colorKey}
-                  imgKey={newNoteState.backImageKey}
-                  handleColKey={handleColKey}
-                  handleImgKey={handleImgKey}
-                  ref={backgroundPaletteRef}
-                />
+                <div className="backgroundPalette" ref={backgroundPaletteRef}>
+                  <BackgroundPalette
+                    colKey={newNoteState.colorKey}
+                    imgKey={newNoteState.backImageKey}
+                    handleColKey={handleColKey}
+                    handleImgKey={handleImgKey}
+                  />
+                </div>
               )}
               {/* <BackgroundPalette /> */}
             </div>

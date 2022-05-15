@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 
 import {
@@ -40,6 +40,8 @@ const Notes = ({
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
 }) => {
+  const backgroundPalettesRef = useRef({});
+
   const deleteForever = async (noteId) => {
     try {
       await deleteDoc(
@@ -137,14 +139,14 @@ const Notes = ({
     }
   };
 
-  const handleNoteBackground = (e) => {
+  const handleNoteBackground = (e, noteId) => {
     console.log("inside handleNoteBackground");
-    console.dir(e.target);
+    // console.dir(e.target);
+    // console.log(backgroundPaletteRef.current);
+    // console.log(backgroundPaletteRef.current?.contains?.(e.target));
     if (
-      e.target.className === "backgroundColorCon" ||
-      e.target.className === "backgroundImageCon" ||
-      e.target.parentElement.className === "backgroundColorCon" ||
-      e.target.parentElement.className === "backgroundImageCon"
+      e.target === backgroundPalettesRef.current[`${noteId}`] ||
+      backgroundPalettesRef.current[`${noteId}`]?.contains?.(e.target)
     ) {
       console.log(e.target);
       return;
@@ -152,6 +154,36 @@ const Notes = ({
     isBackgroundPaletteActive
       ? resetIsBackgroundPaletteActive()
       : setIsBackgroundPaletteActive();
+  };
+
+  const handleNoteColKey = async (selectedColKey, noteId) => {
+    try {
+      await updateDoc(
+        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
+        {
+          colorKey: selectedColKey,
+          editedOn: new Date().toString(),
+        }
+      );
+      getAndSetActiveNotes(currUser.uid);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleNoteImgKey = async (selectedImgKey, noteId) => {
+    try {
+      await updateDoc(
+        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
+        {
+          backImageKey: selectedImgKey,
+          editedOn: new Date().toString(),
+        }
+      );
+      getAndSetActiveNotes(currUser.uid);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {
@@ -219,12 +251,29 @@ const Notes = ({
                       <div
                         className={`iconCon ${theme} palette hoverable`}
                         onClick={(e) => {
-                          handleNoteBackground(e);
+                          handleNoteBackground(e, pinnedNote.id);
                         }}
                       >
                         <IoIosColorPalette className="icon" />
                         <div className="info">Background options</div>
-                        {isBackgroundPaletteActive && <BackgroundPalette />}
+                        {isBackgroundPaletteActive && (
+                          <div
+                            className="backgroundPalette"
+                            ref={(elem) =>
+                              (backgroundPalettesRef.current[
+                                `${pinnedNote.id}`
+                              ] = elem)
+                            }
+                          >
+                            <BackgroundPalette
+                              colKey={pinnedNote.colorKey}
+                              imgKey={pinnedNote.backImageKey}
+                              handleNoteColKey={handleNoteColKey}
+                              handleNoteImgKey={handleNoteImgKey}
+                              noteId={pinnedNote.id}
+                            />
+                          </div>
+                        )}
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}
@@ -309,12 +358,29 @@ const Notes = ({
                       <div
                         className={`iconCon ${theme} palette hoverable`}
                         onClick={(e) => {
-                          handleNoteBackground(e);
+                          handleNoteBackground(e, unPinnedNote.id);
                         }}
                       >
                         <IoIosColorPalette className="icon" />
                         <div className="info">Background options</div>
-                        {isBackgroundPaletteActive && <BackgroundPalette />}
+                        {isBackgroundPaletteActive && (
+                          <div
+                            className="backgroundPalette"
+                            ref={(elem) =>
+                              (backgroundPalettesRef.current[
+                                `${unPinnedNote.id}`
+                              ] = elem)
+                            }
+                          >
+                            <BackgroundPalette
+                              colKey={unPinnedNote.colorKey}
+                              imgKey={unPinnedNote.backImageKey}
+                              handleNoteColKey={handleNoteColKey}
+                              handleNoteImgKey={handleNoteImgKey}
+                              noteId={unPinnedNote.id}
+                            />
+                          </div>
+                        )}
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}

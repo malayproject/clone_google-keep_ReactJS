@@ -34,8 +34,7 @@ const Archived = ({
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
 }) => {
-  const backgroundPaletteRef = useRef();
-
+  const backgroundPalettesRef = useRef({});
   const deleteNote = async (noteId) => {
     try {
       await updateDoc(
@@ -91,14 +90,14 @@ const Archived = ({
     }
   };
 
-  const handleNoteBackground = (e) => {
+  const handleNoteBackground = (e, noteId) => {
     console.log("inside handleNoteBackground");
-    console.dir(e.target);
-    console.log(backgroundPaletteRef.current);
-    console.log(backgroundPaletteRef.current?.contains?.(e.target));
+    // console.dir(e.target);
+    // console.log(backgroundPaletteRef.current);
+    // console.log(backgroundPaletteRef.current?.contains?.(e.target));
     if (
-      e.target == backgroundPaletteRef.current ||
-      backgroundPaletteRef.current?.contains?.(e.target)
+      e.target === backgroundPalettesRef.current[`${noteId}`] ||
+      backgroundPalettesRef.current[`${noteId}`]?.contains?.(e.target)
     ) {
       console.log(e.target);
       return;
@@ -187,20 +186,27 @@ const Archived = ({
                   <div
                     className={`iconCon ${theme} palette hoverable`}
                     onClick={(e) => {
-                      handleNoteBackground(e);
+                      handleNoteBackground(e, archivedNote.id);
                     }}
                   >
                     <IoIosColorPalette className="icon" />
                     <div className="info">Background options</div>
                     {isBackgroundPaletteActive && (
-                      <BackgroundPalette
-                        colKey={archivedNote.colorKey}
-                        imgKey={archivedNote.backImageKey}
-                        handleNoteColKey={handleNoteColKey}
-                        handleNoteImgKey={handleNoteImgKey}
-                        ref={backgroundPaletteRef}
-                        noteId={archivedNote.id}
-                      />
+                      <div
+                        className="backgroundPalette"
+                        ref={(elem) =>
+                          (backgroundPalettesRef.current[`${archivedNote.id}`] =
+                            elem)
+                        }
+                      >
+                        <BackgroundPalette
+                          colKey={archivedNote.colorKey}
+                          imgKey={archivedNote.backImageKey}
+                          handleNoteColKey={handleNoteColKey}
+                          handleNoteImgKey={handleNoteImgKey}
+                          noteId={archivedNote.id}
+                        />
+                      </div>
                     )}
                   </div>
                   <div
