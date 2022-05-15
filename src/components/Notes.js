@@ -92,6 +92,7 @@ const Notes = ({
           title: note.title,
           description: note.description,
           colorKey: note.colorKey,
+          backImageKey: note.backImageKey,
           editedOn: new Date().toString(),
           createdOn: new Date().toString(),
           isPinned: note.isPinned,
