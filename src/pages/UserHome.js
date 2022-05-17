@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { FaLightbulb, FaArchive, FaTrash } from "react-icons/fa";
+import ModalNote from "../components/ModalNote";
 
-const UserHome = ({ theme }) => {
+const UserHome = ({ theme, isModalNoteActive }) => {
   return (
     <div className="userHome">
       <Navbar />
@@ -25,6 +26,7 @@ const UserHome = ({ theme }) => {
         </div>
         <Outlet />
       </div>
+      {isModalNoteActive && <ModalNote />}
     </div>
   );
 };
@@ -32,6 +34,7 @@ const UserHome = ({ theme }) => {
 const mapStateToProps = (state) => {
   return {
     theme: state.app.theme,
+    isModalNoteActive: state.app.isModalNoteActive,
   };
 };
 

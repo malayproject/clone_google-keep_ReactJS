@@ -10,11 +10,21 @@ import {
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { usersColRef } from "../firebaseFolder/FirebaseApp";
-import { getTrashedNotes } from "../redux/notes/NotesActions";
+import {
+  getTrashedNotes,
+  setAndShowModalNote,
+} from "../redux/notes/NotesActions";
 import { MdRestoreFromTrash, MdDeleteForever } from "react-icons/md";
 import { backImages, colors } from "./BackgroundPaletteData";
 
-const Trashed = ({ currUser, notes, theme, getTrashedNotes }) => {
+const Trashed = ({
+  currUser,
+  notes,
+  theme,
+  getTrashedNotes,
+  setAndShowModalNote,
+  resetCreateNoteConActive,
+}) => {
   const deleteForever = async (noteId) => {
     await deleteDoc(
       doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`)
@@ -84,6 +94,10 @@ const Trashed = ({ currUser, notes, theme, getTrashedNotes }) => {
                     `${trashedNote.colorKey}_${theme}`
                   ],
               }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setAndShowModalNote(trashedNote);
+              }}
             >
               <div className="header">
                 <div className="title">{trashedNote.title}</div>
@@ -93,7 +107,8 @@ const Trashed = ({ currUser, notes, theme, getTrashedNotes }) => {
                 <div className="left">
                   <div
                     className={`iconCon ${theme} hoverable`}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       restoreNote(trashedNote.id);
                     }}
                   >
@@ -102,7 +117,8 @@ const Trashed = ({ currUser, notes, theme, getTrashedNotes }) => {
                   </div>
                   <div
                     className={`iconCon ${theme} hoverable`}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       deleteForever(trashedNote.id);
                     }}
                   >
@@ -130,6 +146,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getTrashedNotes: (userId) => dispatch(getTrashedNotes(userId)),
+    setAndShowModalNote: (note) => dispatch(setAndShowModalNote(note)),
   };
 };
 

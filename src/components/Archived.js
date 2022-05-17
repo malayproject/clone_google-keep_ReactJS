@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { usersColRef } from "../firebaseFolder/FirebaseApp";
 import {
   getAndSetArchivedNotes,
+  setAndShowModalNote,
   setArchivedNotes,
 } from "../redux/notes/NotesActions";
 import { IoIosColorPalette } from "react-icons/io";
@@ -33,6 +34,7 @@ const Archived = ({
   isBackgroundPaletteActive,
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
+  setAndShowModalNote,
 }) => {
   const backgroundPalettesRef = useRef({});
   const deleteNote = async (noteId) => {
@@ -173,6 +175,17 @@ const Archived = ({
                     `${archivedNote.colorKey}_${theme}`
                   ],
               }}
+              onClick={(e) => {
+                if (
+                  e.target.classList.contains("iconCon") ||
+                  e.target.parentElement.classList.contains("iconCon")
+                ) {
+                  console.log(e.target.className);
+                  return;
+                }
+
+                setAndShowModalNote(archivedNote);
+              }}
             >
               <div className="header">
                 <div className="title">{archivedNote.title}</div>
@@ -187,6 +200,7 @@ const Archived = ({
                   <div
                     className={`iconCon ${theme} palette hoverable`}
                     onClick={(e) => {
+                      e.stopPropagation();
                       handleNoteBackground(e, archivedNote.id);
                     }}
                   >
@@ -212,7 +226,8 @@ const Archived = ({
                   </div>
                   <div
                     className={`iconCon ${theme} hoverable`}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       copyNote(archivedNote);
                     }}
                   >
@@ -221,7 +236,8 @@ const Archived = ({
                   </div>
                   <div
                     className={`iconCon ${theme} hoverable`}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       unArchiveNote(archivedNote.id);
                     }}
                   >
@@ -230,7 +246,8 @@ const Archived = ({
                   </div>
                   <div
                     className={`iconCon ${theme} hoverable`}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       deleteNote(archivedNote.id);
                     }}
                   >
@@ -241,7 +258,9 @@ const Archived = ({
                 <div className="right">
                   <div
                     className={`iconCon ${theme} hoverable`}
-                    onClick={() => {}}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
                   >
                     <BiDotsVerticalRounded className="icon" />
                     <div className="info">More</div>
@@ -273,6 +292,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setIsBackgroundPaletteActive()),
     resetIsBackgroundPaletteActive: () =>
       dispatch(resetIsBackgroundPaletteActive()),
+    setAndShowModalNote: (note) => dispatch(setAndShowModalNote(note)),
   };
 };
 

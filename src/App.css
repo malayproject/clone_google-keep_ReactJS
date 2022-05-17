@@ -24,6 +24,33 @@
   width: 100%;
   min-height: 100vh;
   background-color: transparent;
+  position: relative;
+}
+
+.modalNoteCon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(128, 128, 128, 0.507);
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalNoteCon.dark {
+  background-color: rgba(26, 26, 26, 0.623);
+}
+
+.modalNote  {
+  width: 30rem;
+  min-height: 12rem;
+  max-height: 40rem;
+  top: calc(50vh - 10rem);
+  left: calc(50vw - 15rem);
+  border-radius: 0.4rem;
+  box-shadow: 0 0 10rem 50rem rgba(75, 75, 75, 0.26);
 }
 
 .settingsPage {
@@ -387,20 +414,20 @@
   border: 2px solid rgb(0, 219, 0);
 }
 
-.newNote  {
+.newNote, .modalNote  {
   width: clamp(40rem, 50%, 50rem);
   padding: 1rem;
 }
 
-.newNote .header{
+.newNote .header, .modalNote .header{
   display: flex;
 
   align-items: left;
 }
 
-.newNote .header .newTitle{
+.newNote .header .newTitle, .modalNote .header .newTitle{
   width: 92%;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   min-height: 3rem;
   max-height: 3rem;
   word-wrap: normal;
@@ -410,36 +437,41 @@
   overflow: auto;
   cursor: text;
   resize: none;
-  color: #bbb;
+  color: #444 ;
   font-weight: 600;
 }
 
-.newNote .header .newTitle:focus{
+.newNote .header .newTitle.dark, .modalNote .header .newTitle.dark{
+  color: #ccc ;
+}
+
+.newNote .newTitle:focus, .modalNote .newTitle:focus{
   outline: none;
 }
 
-.newNote .newDescription {
+.newNote .newDescription, .modalNote .newDescription {
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.1rem;
   /* min-height: 5rem; */
-  max-height: 30rem;
+  /* max-height: 30rem; */
+  /* height: fit-content; */
   word-wrap: normal;
   border: none;
   background-color: transparent;
   overflow: auto;
   text-align: left;
   resize: none;
-  color: #aaa;
+  color: #333;
 }
 
-.newNote .newDescription:focus{
+.newNote .newDescription.dark, .modalNote .newDescription.dark{
+  color: #bbb;
+}
+
+.newNote .newDescription:focus, .modalNote .newDescription:focus{
   outline: none;
 }
 
-[contentEditable=true]:empty:not(:focus):before{
-  content:attr(data-text);
-  color: grey;
-}
 
 ::-webkit-scrollbar {
   width: 0.7rem;
@@ -454,7 +486,7 @@
   background-color: #777;
 }
 
-.newNote .actions .right .bottom  {
+.newNote .actions .right .bottom, .modalNote .actions .right .bottom {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;

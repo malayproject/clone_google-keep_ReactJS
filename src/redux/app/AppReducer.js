@@ -1,4 +1,8 @@
 import {
+  RESET_AND_HIDE_MODAL_NOTE,
+  SET_AND_SHOW_MODAL_NOTE,
+} from "../notes/NotesActionTypes";
+import {
   LOADING,
   LOADED,
   SET_LIGHT_THEME,
@@ -13,6 +17,7 @@ const initialState = {
   theme: "",
   isCreateNoteConActive: false,
   isBackgroundPaletteActive: false,
+  isModalNoteActive: false,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -56,6 +61,18 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         isBackgroundPaletteActive: false,
+      };
+    case SET_AND_SHOW_MODAL_NOTE:
+      return {
+        ...state,
+        isModalNoteActive: true,
+        isCreateNoteConActive: false,
+        isBackgroundPaletteActive: false,
+      };
+    case RESET_AND_HIDE_MODAL_NOTE:
+      return {
+        ...state,
+        isModalNoteActive: false,
       };
     default:
       return state;

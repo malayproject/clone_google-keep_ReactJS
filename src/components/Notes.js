@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   getAndSetActiveNotes,
   setActiveNotes,
+  setAndShowModalNote,
   setArchivedNotes,
 } from "../redux/notes/NotesActions";
 import { BsPin, BsPinFill } from "react-icons/bs";
@@ -39,6 +40,7 @@ const Notes = ({
   resetIsCreateNoteConActive,
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
+  setAndShowModalNote,
 }) => {
   const backgroundPalettesRef = useRef({});
 
@@ -194,7 +196,13 @@ const Notes = ({
   }, []);
 
   return (
-    <div className={`notesCon ${theme}`}>
+    <div
+      className={`notesCon ${theme}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        resetIsCreateNoteConActive();
+      }}
+    >
       <div className="createNoteCon">
         {isCreateNoteConActive ? (
           <CreateOrEditNote />
@@ -203,7 +211,10 @@ const Notes = ({
             type="text"
             className="minimized"
             placeholder="Take a note..."
-            onClick={setIsCreateNoteConActive}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsCreateNoteConActive(e);
+            }}
           />
         )}
       </div>
@@ -235,12 +246,18 @@ const Notes = ({
                         `${pinnedNote.colorKey}_${theme}`
                       ],
                   }}
+                  onClick={(e) => {
+                    setAndShowModalNote(pinnedNote);
+                  }}
                 >
                   <div className="header">
                     <div className="title">{pinnedNote.title}</div>
                     <div
                       className={`iconCon ${theme} hoverable`}
-                      onClick={() => unPinNote(pinnedNote.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        unPinNote(pinnedNote.id);
+                      }}
                     >
                       <BsPinFill className="icon" />
                       <div className="info">Unpin</div>
@@ -252,6 +269,7 @@ const Notes = ({
                       <div
                         className={`iconCon ${theme} palette hoverable`}
                         onClick={(e) => {
+                          e.stopPropagation();
                           handleNoteBackground(e, pinnedNote.id);
                         }}
                       >
@@ -278,7 +296,8 @@ const Notes = ({
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           copyNote(pinnedNote);
                         }}
                       >
@@ -287,14 +306,20 @@ const Notes = ({
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}
-                        onClick={() => archiveNote(pinnedNote.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          archiveNote(pinnedNote.id);
+                        }}
                       >
                         <MdArchive className="icon" />
                         <div className="info">Archive</div>
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}
-                        onClick={() => deleteNote(pinnedNote.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteNote(pinnedNote.id);
+                        }}
                       >
                         <MdDelete className="icon" />
                         <div className="info">delete</div>
@@ -303,7 +328,9 @@ const Notes = ({
                     <div className="right">
                       <div
                         className={`iconCon ${theme} hoverable`}
-                        onClick={() => {}}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
                       >
                         <BiDotsVerticalRounded className="icon" />
                         <div className="info">More</div>
@@ -342,12 +369,18 @@ const Notes = ({
                         `${unPinnedNote.colorKey}_${theme}`
                       ],
                   }}
+                  onClick={(e) => {
+                    setAndShowModalNote(unPinnedNote);
+                  }}
                 >
                   <div className="header">
                     <div className="title">{unPinnedNote.title}</div>
                     <div
                       className={`iconCon ${theme} hoverable`}
-                      onClick={() => pinNote(unPinnedNote.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        pinNote(unPinnedNote.id);
+                      }}
                     >
                       <BsPin className="icon" />
                       <div className="info">Pin</div>
@@ -359,6 +392,7 @@ const Notes = ({
                       <div
                         className={`iconCon ${theme} palette hoverable`}
                         onClick={(e) => {
+                          e.stopPropagation();
                           handleNoteBackground(e, unPinnedNote.id);
                         }}
                       >
@@ -385,7 +419,8 @@ const Notes = ({
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           copyNote(unPinnedNote);
                         }}
                       >
@@ -394,7 +429,8 @@ const Notes = ({
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           archiveNote(unPinnedNote.id);
                         }}
                       >
@@ -403,7 +439,10 @@ const Notes = ({
                       </div>
                       <div
                         className={`iconCon ${theme} hoverable`}
-                        onClick={() => deleteNote(unPinnedNote.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteNote(unPinnedNote.id);
+                        }}
                       >
                         <MdDelete className="icon" />
                         <div className="info">Delete</div>
@@ -412,7 +451,9 @@ const Notes = ({
                     <div className="right">
                       <div
                         className={`iconCon ${theme} hoverable`}
-                        onClick={() => {}}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
                       >
                         <BiDotsVerticalRounded className="icon" />
                         <div className="info">More</div>
@@ -448,6 +489,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setIsBackgroundPaletteActive()),
     resetIsBackgroundPaletteActive: () =>
       dispatch(resetIsBackgroundPaletteActive()),
+    setAndShowModalNote: (note) => dispatch(setAndShowModalNote(note)),
+    resetIsCreateNoteConActive: () => dispatch(resetIsCreateNoteConActive()),
   };
 };
 

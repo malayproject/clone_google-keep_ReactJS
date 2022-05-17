@@ -41,6 +41,11 @@ const CreateOrEditNote = ({
 
   const backgroundPaletteRef = useRef();
 
+  const handleDescriptionHeightGrowth = (e) => {
+    e.target.style.height = "inherit";
+    e.target.style.height = `${Math.min(e.target.scrollHeight, 200)}px`;
+  };
+
   const addNoteToDB = async () => {
     console.log("inside addNoteToDB");
 
@@ -178,6 +183,9 @@ const CreateOrEditNote = ({
             "1px solid " +
             colors[newNoteState.colorKey][`${newNoteState.colorKey}_${theme}`],
         }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
         <div className="header">
           <textarea
@@ -185,6 +193,7 @@ const CreateOrEditNote = ({
             className="newTitle"
             value={newNoteState.title}
             onChange={handleTitleChange}
+            // onKeyDown={handleTitleHeightGrowth}
           />
           {newNoteState.isPinned ? (
             <div
@@ -209,6 +218,7 @@ const CreateOrEditNote = ({
           className="newDescription"
           value={newNoteState.description}
           onChange={handleDescriptionChange}
+          onKeyDown={(e) => handleDescriptionHeightGrowth(e)}
           autoFocus
         />
         <div className="actions">

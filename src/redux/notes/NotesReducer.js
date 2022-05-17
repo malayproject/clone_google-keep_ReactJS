@@ -2,6 +2,7 @@ import * as actionTypes from "./NotesActionTypes";
 
 const initialState = {
   notes: {},
+  modalNote: null,
 };
 
 const notesReducer = (state = initialState, action) => {
@@ -32,6 +33,16 @@ const notesReducer = (state = initialState, action) => {
           ...state.notes,
           trashedNotes: action.payload,
         },
+      };
+    case actionTypes.SET_AND_SHOW_MODAL_NOTE:
+      return {
+        ...state,
+        modalNote: action.payload,
+      };
+    case actionTypes.RESET_AND_HIDE_MODAL_NOTE:
+      return {
+        ...state,
+        modalNote: null,
       };
     default:
       return state;

@@ -1,3 +1,4 @@
+import { SET_AND_SHOW_MODAL_NOTE } from "../notes/NotesActionTypes";
 import {
   LOADING,
   LOADED,

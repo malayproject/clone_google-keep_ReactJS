@@ -1,12 +1,5 @@
 import * as actionTypes from "./NotesActionTypes";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { usersColRef } from "../../firebaseFolder/FirebaseApp";
 
 export const setActiveNotes = (activeNotes) => {
@@ -97,5 +90,18 @@ export const getTrashedNotes = (userId) => {
       trashedNotes.push({ ...doc.data(), id: doc.id })
     );
     dispatch(setTrashedNotes(trashedNotes));
+  };
+};
+
+export const setAndShowModalNote = (note) => {
+  return {
+    type: actionTypes.SET_AND_SHOW_MODAL_NOTE,
+    payload: note,
+  };
+};
+
+export const resetAndHideModalNote = () => {
+  return {
+    type: actionTypes.RESET_AND_HIDE_MODAL_NOTE,
   };
 };
