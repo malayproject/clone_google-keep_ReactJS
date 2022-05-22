@@ -14,6 +14,10 @@ import {
   getAndSetArchivedNotes,
   setAndShowModalNote,
   setArchivedNotes,
+  unArchiveNote,
+  deleteNote,
+  copyNote,
+  pinNote,
 } from "../redux/notes/NotesActions";
 import { IoIosColorPalette } from "react-icons/io";
 import { MdUnarchive, MdDelete, MdContentCopy } from "react-icons/md";
@@ -35,63 +39,12 @@ const Archived = ({
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
   setAndShowModalNote,
+  unArchiveNote,
+  deleteNote,
+  copyNote,
+  pinNote,
 }) => {
   const backgroundPalettesRef = useRef({});
-  const deleteNote = async (noteId) => {
-    try {
-      await updateDoc(
-        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
-        {
-          isTrashed: true,
-          isArchived: false,
-          isPinned: false,
-          editedOn: new Date().toString(),
-        }
-      );
-      getAndSetArchivedNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const copyNote = async (note) => {
-    try {
-      const doc = await addDoc(
-        collection(usersColRef, `/${currUser.uid}/notes`),
-        {
-          title: note.title,
-          description: note.description,
-          colorKey: note.colorKey,
-          backImageKey: note.backImageKey,
-          editedOn: new Date().toString(),
-          createdOn: new Date().toString(),
-          isPinned: note.isPinned,
-          isArchived: note.isArchived,
-          isTrashed: note.isTrashed,
-        }
-      );
-      getAndSetArchivedNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const unArchiveNote = async (noteId) => {
-    try {
-      await updateDoc(
-        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
-        {
-          isTrashed: false,
-          isArchived: false,
-          isPinned: false,
-          editedOn: new Date().toString(),
-        }
-      );
-      getAndSetArchivedNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   const handleNoteBackground = (e, noteId) => {
     console.log("inside handleNoteBackground");
@@ -176,20 +129,25 @@ const Archived = ({
                   ],
               }}
               onClick={(e) => {
-                if (
-                  e.target.classList.contains("iconCon") ||
-                  e.target.parentElement.classList.contains("iconCon")
-                ) {
-                  console.log(e.target.className);
-                  return;
-                }
-
-                setAndShowModalNote(archivedNote);
+                // if (
+                //   e.target.classList.contains("iconCon") ||
+                //   e.target.parentElement.classList.contains("iconCon")
+                // ) {
+                //   console.log(e.target.className);
+                //   return;
+                // }
+                setAndShowModalNote(archivedNote, "archive");
               }}
             >
               <div className="header">
                 <div className="title">{archivedNote.title}</div>
-                <div className={`iconCon ${theme} hoverable`}>
+                <div
+                  className={`iconCon ${theme} hoverable`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    pinNote(archivedNote.id, "archive", currUser.uid);
+                  }}
+                >
                   <BsPin className="icon" />
                   <div className="info">Pin</div>
                 </div>
@@ -228,7 +186,7 @@ const Archived = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      copyNote(archivedNote);
+                      copyNote(archivedNote, currUser.uid);
                     }}
                   >
                     <MdContentCopy className="icon" />
@@ -238,7 +196,7 @@ const Archived = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      unArchiveNote(archivedNote.id);
+                      unArchiveNote(archivedNote.id, currUser.uid);
                     }}
                   >
                     <MdUnarchive className="icon" />
@@ -248,7 +206,11 @@ const Archived = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      deleteNote(archivedNote.id);
+                      deleteNote(
+                        archivedNote.id,
+                        archivedNote.isArchived,
+                        currUser.uid
+                      );
                     }}
                   >
                     <MdDelete className="icon" />
@@ -292,7 +254,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setIsBackgroundPaletteActive()),
     resetIsBackgroundPaletteActive: () =>
       dispatch(resetIsBackgroundPaletteActive()),
-    setAndShowModalNote: (note) => dispatch(setAndShowModalNote(note)),
+    setAndShowModalNote: (note, source) =>
+      dispatch(setAndShowModalNote(note, source)),
+    deleteNote: (noteId, isArchived, userId) => {
+      dispatch(deleteNote(noteId, isArchived, userId));
+    },
+    copyNote: (note, userId) => dispatch(copyNote(note, userId)),
+    unArchiveNote: (noteId, userId) => dispatch(unArchiveNote(noteId, userId)),
+    pinNote: (noteId, source, userId) =>
+      dispatch(pinNote(noteId, source, userId)),
   };
 };
 

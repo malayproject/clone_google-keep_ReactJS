@@ -1,4 +1,6 @@
 import "./App.css";
+import "react-notifications/lib/notifications.css";
+import { NotificationContainer } from "react-notifications";
 import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -18,8 +20,17 @@ import { setAuthState } from "./redux/auth/AuthActions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseFolder/FirebaseApp";
 import SettingsPage from "./pages/SettingsPage";
+import ModalSettings from "./components/ModalSettings";
+import ModalNote from "./components/ModalNote";
 
-function App({ isAuthenticated, currUser, theme, setAuthState }) {
+function App({
+  isAuthenticated,
+  currUser,
+  theme,
+  setAuthState,
+  isModalNoteActive,
+  isModalSettingsActive,
+}) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,6 +64,9 @@ function App({ isAuthenticated, currUser, theme, setAuthState }) {
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+      {isModalSettingsActive && <ModalSettings />}
+      {isModalNoteActive && <ModalNote />}
+      <NotificationContainer />
     </div>
   );
 }
@@ -62,6 +76,8 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.auth.isAuthenticated,
     currUser: state.auth.currUser,
     theme: state.app.theme,
+    isModalNoteActive: state.app.isModalNoteActive,
+    isModalSettingsActive: state.app.isModalSettingsActive,
   };
 };
 

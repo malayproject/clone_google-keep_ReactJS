@@ -8,7 +8,7 @@ import { BiReset } from "react-icons/bi";
 import { MdArchive, MdDelete, MdContentCopy } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
-const ModalNote = ({ modalNote, theme, resetAndHideModalNote }) => {
+const ModalNote = ({ modalNote, modalSrc, theme, resetAndHideModalNote }) => {
   const modalNoteRef = useRef(null);
 
   const hideModal = (e) => {
@@ -23,7 +23,7 @@ const ModalNote = ({ modalNote, theme, resetAndHideModalNote }) => {
 
   const handleDescriptionHeightGrowth = (e) => {
     e.target.style.height = "inherit";
-    e.target.style.height = `${Math.min(e.target.scrollHeight, 200)}px`;
+    e.target.style.height = `${Math.min(e.target.scrollHeight + 20, 200)}px`;
   };
 
   useEffect(() => {
@@ -61,7 +61,6 @@ const ModalNote = ({ modalNote, theme, resetAndHideModalNote }) => {
           border:
             "1px solid " +
             colors[modalNote.colorKey][`${modalNote.colorKey}_${theme}`],
-          //   top: window.visualViewport.offsetTop + window.visualViewport.height,
         }}
       >
         <div className="header">
@@ -97,6 +96,7 @@ const ModalNote = ({ modalNote, theme, resetAndHideModalNote }) => {
           //   onChange={handleDescriptionChange}
           autoFocus
           onChange={() => {}}
+          style={{ height: "fit-content" }}
           onKeyDown={(e) => handleDescriptionHeightGrowth(e)}
         />
         <div className="actions">
@@ -153,10 +153,19 @@ const ModalNote = ({ modalNote, theme, resetAndHideModalNote }) => {
             </div>
           </div>
           <div className="right">
-            <div className="top"></div>
+            <div className="top">
+              {(modalSrc !== "notes"
+                ? modalSrc === "archive"
+                  ? "note in archive . "
+                  : "note in trash . "
+                : "") +
+                "Edited " +
+                modalNote.editedOn.slice(4, 10)}
+            </div>
             <div className="bottom">
               <button
                 className={`${theme} hoverable`}
+
                 // onClick={() => {
                 //   addNoteToDBAndReset();
                 // }}
@@ -179,6 +188,7 @@ const mapStateToProps = (state) => {
   return {
     theme: state.app.theme,
     modalNote: state.notes.modalNote,
+    modalSrc: state.notes.modalSrc,
   };
 };
 

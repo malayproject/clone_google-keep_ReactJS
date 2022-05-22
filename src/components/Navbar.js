@@ -3,31 +3,44 @@ import { connect } from "react-redux";
 import { logout } from "../redux/auth/AuthActions";
 import { FaBars, FaCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import {
+  resetSidebarExpand,
+  setModalSettingsActive,
+  setSidebarExpand,
+} from "../redux/app/AppActions";
+import Keep from "../images/clone-keep.svg";
 
-const Navbar = ({ currUser, theme, logout }) => {
+const Navbar = ({
+  currUser,
+  theme,
+  logout,
+  isSidebarExpanded,
+  setSidebarExpand,
+  resetSidebarExpand,
+  setModalSettingsActive,
+}) => {
   const navigate = useNavigate();
-
   return (
     <div className={`navbar ${theme}`}>
       <div className="left">
-        <div className={`iconCon ${theme} hoverable`}>
+        <div
+          className={`iconCon ${theme} hoverable`}
+          onClick={() => {
+            isSidebarExpanded ? resetSidebarExpand() : setSidebarExpand();
+          }}
+        >
           <FaBars className="icon" />
           <div className="info">Sidebar menu</div>
         </div>
         <div className="brandCon">
-          <img
-            src={
-              "https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png"
-            }
-            className="brandImg"
-          />
+          <img src={Keep} className="brandImg" />
           <div className="">Clone Keep</div>
         </div>
       </div>
       <div className="right">
         <div
           className={`iconCon ${theme} hoverable`}
-          onClick={() => navigate("/settings")}
+          onClick={() => setModalSettingsActive()}
         >
           <FaCog className="icon" />
           <div className="info">Settings</div>
@@ -55,12 +68,16 @@ const mapStateToProps = (state) => {
   return {
     theme: state.app.theme,
     currUser: state.auth.currUser,
+    isSidebarExpanded: state.app.isSidebarExpanded,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
+    setSidebarExpand: () => dispatch(setSidebarExpand()),
+    resetSidebarExpand: () => dispatch(resetSidebarExpand()),
+    setModalSettingsActive: () => dispatch(setModalSettingsActive()),
   };
 };
 

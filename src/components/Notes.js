@@ -2,10 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 
 import {
+  archiveNote,
+  copyNote,
+  deleteNote,
   getAndSetActiveNotes,
+  pinNote,
   setActiveNotes,
   setAndShowModalNote,
   setArchivedNotes,
+  unPinNote,
 } from "../redux/notes/NotesActions";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { IoIosColorPalette } from "react-icons/io";
@@ -41,106 +46,13 @@ const Notes = ({
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
   setAndShowModalNote,
+  archiveNote,
+  deleteNote,
+  copyNote,
+  pinNote,
+  unPinNote,
 }) => {
   const backgroundPalettesRef = useRef({});
-
-  const deleteForever = async (noteId) => {
-    try {
-      await deleteDoc(
-        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`)
-      );
-
-      getAndSetActiveNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const unPinNote = async (noteId) => {
-    try {
-      await updateDoc(
-        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
-        {
-          isPinned: false,
-          editedOn: new Date().toString(),
-        }
-      );
-      getAndSetActiveNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const pinNote = async (noteId) => {
-    try {
-      await updateDoc(
-        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
-        {
-          isPinned: true,
-          editedOn: new Date().toString(),
-        }
-      );
-      getAndSetActiveNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const copyNote = async (note) => {
-    try {
-      const doc = await addDoc(
-        collection(usersColRef, `/${currUser.uid}/notes`),
-        {
-          title: note.title,
-          description: note.description,
-          colorKey: note.colorKey,
-          backImageKey: note.backImageKey,
-          editedOn: new Date().toString(),
-          createdOn: new Date().toString(),
-          isPinned: note.isPinned,
-          isArchived: note.isArchived,
-          isTrashed: note.isTrashed,
-        }
-      );
-      getAndSetActiveNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const archiveNote = async (noteId) => {
-    try {
-      await updateDoc(
-        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
-        {
-          isTrashed: false,
-          isArchived: true,
-          isPinned: false,
-          editedOn: new Date().toString(),
-        }
-      );
-      getAndSetActiveNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const deleteNote = async (noteId) => {
-    try {
-      await updateDoc(
-        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
-        {
-          isTrashed: true,
-          isArchived: false,
-          isPinned: false,
-          editedOn: new Date().toString(),
-        }
-      );
-      getAndSetActiveNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   const handleNoteBackground = (e, noteId) => {
     console.log("inside handleNoteBackground");
@@ -247,7 +159,7 @@ const Notes = ({
                       ],
                   }}
                   onClick={(e) => {
-                    setAndShowModalNote(pinnedNote);
+                    setAndShowModalNote(pinnedNote, "notes");
                   }}
                 >
                   <div className="header">
@@ -256,7 +168,7 @@ const Notes = ({
                       className={`iconCon ${theme} hoverable`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        unPinNote(pinnedNote.id);
+                        unPinNote(pinnedNote.id, currUser.uid);
                       }}
                     >
                       <BsPinFill className="icon" />
@@ -298,7 +210,7 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          copyNote(pinnedNote);
+                          copyNote(pinnedNote, currUser.uid);
                         }}
                       >
                         <MdContentCopy className="icon" />
@@ -308,7 +220,7 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          archiveNote(pinnedNote.id);
+                          archiveNote(pinnedNote.id, currUser.uid);
                         }}
                       >
                         <MdArchive className="icon" />
@@ -318,7 +230,11 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          deleteNote(pinnedNote.id);
+                          deleteNote(
+                            pinnedNote.id,
+                            pinnedNote.isArchived,
+                            currUser.uid
+                          );
                         }}
                       >
                         <MdDelete className="icon" />
@@ -370,7 +286,7 @@ const Notes = ({
                       ],
                   }}
                   onClick={(e) => {
-                    setAndShowModalNote(unPinnedNote);
+                    setAndShowModalNote(unPinnedNote, "notes");
                   }}
                 >
                   <div className="header">
@@ -379,7 +295,7 @@ const Notes = ({
                       className={`iconCon ${theme} hoverable`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        pinNote(unPinnedNote.id);
+                        pinNote(unPinnedNote.id, "notes", currUser.uid);
                       }}
                     >
                       <BsPin className="icon" />
@@ -421,7 +337,7 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          copyNote(unPinnedNote);
+                          copyNote(unPinnedNote, currUser.uid);
                         }}
                       >
                         <MdContentCopy className="icon" />
@@ -431,7 +347,7 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          archiveNote(unPinnedNote.id);
+                          archiveNote(unPinnedNote.id, currUser.uid);
                         }}
                       >
                         <MdArchive className="icon" />
@@ -441,7 +357,11 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          deleteNote(unPinnedNote.id);
+                          deleteNote(
+                            unPinnedNote.id,
+                            unPinnedNote.isArchived,
+                            currUser.uid
+                          );
                         }}
                       >
                         <MdDelete className="icon" />
@@ -489,8 +409,16 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setIsBackgroundPaletteActive()),
     resetIsBackgroundPaletteActive: () =>
       dispatch(resetIsBackgroundPaletteActive()),
-    setAndShowModalNote: (note) => dispatch(setAndShowModalNote(note)),
+    setAndShowModalNote: (note, source) =>
+      dispatch(setAndShowModalNote(note, source)),
     resetIsCreateNoteConActive: () => dispatch(resetIsCreateNoteConActive()),
+    deleteNote: (noteId, isArchived, userId) =>
+      dispatch(deleteNote(noteId, isArchived, userId)),
+    archiveNote: (noteId, userId) => dispatch(archiveNote(noteId, userId)),
+    copyNote: (note, userId) => dispatch(copyNote(note, userId)),
+    pinNote: (noteId, source, userId) =>
+      dispatch(pinNote(noteId, source, userId)),
+    unPinNote: (noteId, userId) => dispatch(unPinNote(noteId, userId)),
   };
 };
 

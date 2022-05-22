@@ -11,6 +11,12 @@ import {
   RESET_CREATE_NOTE_CON_ACTIVE,
   RESET_BACKGROUND_PALETTE_ACTIVE,
   SET_BACKGROUND_PALETTE_ACTIVE,
+  SET_SIDEBAR_EXPAND,
+  RESET_SIDEBAR_EXPAND,
+  SET_SETTINGS_PARAMETERS,
+  RESET_SETTINGS_PARAMETERS,
+  SET_MODAL_SETTINGS_ACTIVE,
+  RESET_MODAL_SETTINGS_ACTIVE,
 } from "./AppActionTypes";
 const initialState = {
   loading: false,
@@ -18,6 +24,12 @@ const initialState = {
   isCreateNoteConActive: false,
   isBackgroundPaletteActive: false,
   isModalNoteActive: false,
+  isSidebarExpanded: true,
+  isModalSettingsActive: false,
+  settingsParameters: {
+    newItemsAtBottom: false,
+    darkTheme: false,
+  },
 };
 
 const appReducer = (state = initialState, action) => {
@@ -73,6 +85,42 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         isModalNoteActive: false,
+      };
+    case SET_SIDEBAR_EXPAND:
+      return {
+        ...state,
+        isSidebarExpanded: true,
+      };
+    case RESET_SIDEBAR_EXPAND:
+      return {
+        ...state,
+        isSidebarExpanded: false,
+      };
+    case SET_SETTINGS_PARAMETERS:
+      return {
+        ...state,
+        settingsParameters: {
+          newItemsAtBottom: action.payload.newItemsAtBottom,
+          darkTheme: action.payload.darkTheme,
+        },
+      };
+    case RESET_SETTINGS_PARAMETERS:
+      return {
+        ...state,
+        settingsParameters: {
+          newItemsAtBottom: false,
+          darkTheme: false,
+        },
+      };
+    case SET_MODAL_SETTINGS_ACTIVE:
+      return {
+        ...state,
+        isModalSettingsActive: true,
+      };
+    case RESET_MODAL_SETTINGS_ACTIVE:
+      return {
+        ...state,
+        isModalSettingsActive: false,
       };
     default:
       return state;

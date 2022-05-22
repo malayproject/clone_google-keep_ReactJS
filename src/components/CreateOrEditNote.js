@@ -43,7 +43,7 @@ const CreateOrEditNote = ({
 
   const handleDescriptionHeightGrowth = (e) => {
     e.target.style.height = "inherit";
-    e.target.style.height = `${Math.min(e.target.scrollHeight, 200)}px`;
+    e.target.style.height = `${Math.min(e.target.scrollHeight + 20, 200)}px`;
   };
 
   const addNoteToDB = async () => {
@@ -190,7 +190,7 @@ const CreateOrEditNote = ({
         <div className="header">
           <textarea
             placeholder="title"
-            className="newTitle"
+            className={`newTitle ${theme}`}
             value={newNoteState.title}
             onChange={handleTitleChange}
             // onKeyDown={handleTitleHeightGrowth}
@@ -215,7 +215,7 @@ const CreateOrEditNote = ({
         </div>
         <textarea
           placeholder="take a note..."
-          className="newDescription"
+          className={`newDescription ${theme}`}
           value={newNoteState.description}
           onChange={handleDescriptionChange}
           onKeyDown={(e) => handleDescriptionHeightGrowth(e)}

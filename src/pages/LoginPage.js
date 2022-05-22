@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import authenticate from "../redux/auth/AuthActions";
+import Keep from "../images/clone-keep.svg";
 
 const LoginPage = ({ isAuthenticated, authenticate }) => {
   const navigate = useNavigate();
@@ -14,8 +15,17 @@ const LoginPage = ({ isAuthenticated, authenticate }) => {
 
   return (
     <div className="loginPage">
-      <h2>Login</h2>
-      <button onClick={authenticate}>Signin with Google</button>
+      <div className="signinCon">
+        <div className="signin">Your personal logger</div>
+        <div className="brandCon">
+          <img src={Keep} className="brandImg" />
+          <div className="brandName">Clone Keep</div>
+        </div>
+
+        <button className="login-with-google-btn" onClick={authenticate}>
+          Sign in with Google
+        </button>
+      </div>
     </div>
   );
 };

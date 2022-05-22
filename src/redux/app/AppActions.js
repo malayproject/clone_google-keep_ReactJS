@@ -8,6 +8,12 @@ import {
   RESET_CREATE_NOTE_CON_ACTIVE,
   SET_BACKGROUND_PALETTE_ACTIVE,
   RESET_BACKGROUND_PALETTE_ACTIVE,
+  SET_SIDEBAR_EXPAND,
+  RESET_SIDEBAR_EXPAND,
+  SET_MODAL_SETTINGS_ACTIVE,
+  RESET_MODAL_SETTINGS_ACTIVE,
+  SET_SETTINGS_PARAMETERS,
+  RESET_SETTINGS_PARAMETERS,
 } from "./AppActionTypes";
 
 export const loading = () => {
@@ -55,5 +61,45 @@ export const setIsBackgroundPaletteActive = () => {
 export const resetIsBackgroundPaletteActive = () => {
   return {
     type: RESET_BACKGROUND_PALETTE_ACTIVE,
+  };
+};
+
+export const setSidebarExpand = () => {
+  return {
+    type: SET_SIDEBAR_EXPAND,
+  };
+};
+
+export const resetSidebarExpand = () => {
+  return {
+    type: RESET_SIDEBAR_EXPAND,
+  };
+};
+
+export const setModalSettingsActive = () => {
+  return {
+    type: SET_MODAL_SETTINGS_ACTIVE,
+  };
+};
+
+export const resetModalSettingsActive = () => {
+  return {
+    type: RESET_MODAL_SETTINGS_ACTIVE,
+  };
+};
+
+export const setSettingsParameters = (settings) => {
+  return {
+    type: SET_SETTINGS_PARAMETERS,
+    payload: {
+      newItemsAtBottom: settings.newItemsAtBottom,
+      darkTheme: settings.darkTheme,
+    },
+  };
+};
+
+export const resetSettingsParameters = () => {
+  return {
+    type: RESET_SETTINGS_PARAMETERS,
   };
 };

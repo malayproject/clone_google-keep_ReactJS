@@ -5,6 +5,7 @@
 
 
 .App {
+  position: relative;
   text-align: center;
   width: 100vw;
   min-height: 100vh;
@@ -24,14 +25,14 @@
   width: 100%;
   min-height: 100vh;
   background-color: transparent;
-  position: relative;
+  /* position: relative; */
 }
 
 .modalNoteCon {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(128, 128, 128, 0.507);
+  background-color: rgba(0, 0, 0, 0.507);
   width: 100vw;
   height: 100%;
   display: flex;
@@ -40,21 +41,104 @@
 }
 
 .modalNoteCon.dark {
-  background-color: rgba(26, 26, 26, 0.623);
+  background-color: rgba(0, 0, 0, 0.459);
 }
 
 .modalNote  {
+  position: fixed;
   width: 30rem;
   min-height: 12rem;
   max-height: 40rem;
-  top: calc(50vh - 10rem);
-  left: calc(50vw - 15rem);
+  /* top: calc(50vh - 10rem); */
+  top: 20rem;
+  left: calc(50vw - clamp(20rem, 25%, 25rem));
   border-radius: 0.4rem;
-  box-shadow: 0 0 10rem 50rem rgba(75, 75, 75, 0.26);
+  /* box-shadow: 0 0 10rem 50rem rgba(75, 75, 75, 0.26); */
 }
 
 .settingsPage {
   background-color: transparent;
+}
+
+.loginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.loginPage .signin  {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgba(124, 124, 124, 0.971);
+  padding: 0 0 1rem 0;
+}
+
+.signinCon .brandImg{
+  width: 10rem;
+}
+
+.signinCon .brandName {
+  font-size: 1.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04rem;
+  color: rgb(119, 119, 119);
+}
+
+.loginPage .signinCon {
+  width: 24rem;
+  height: 28rem;
+  border: 1px solid rgba(184, 184, 184, 0.571);
+  border-radius: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+}
+
+.login-with-google-btn {
+  cursor: pointer;
+  transition: background-color .3s, box-shadow .3s;
+    
+  padding: 8px 12px 8px 42px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+  
+  color: #888;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
+  background-color: rgb(240, 240, 240);
+  background-repeat: no-repeat;
+  background-position: 12px 9px;
+}
+
+.login-with-google-btn:hover {
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.login-with-google-btn:active {
+  background-color: #eeeeee;
+}
+
+.login-with-google-btn:focus {
+  outline: none;
+  box-shadow: 
+    0 -1px 0 rgba(0, 0, 0, .04),
+    0 2px 4px rgba(0, 0, 0, .25),
+    0 0 0 3px #c8dafc;
+}
+
+.login-with-google-btn:disabled {
+  filter: grayscale(100%);
+  background-color: #ebebeb;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+  cursor: not-allowed;
 }
 
 .navbar {
@@ -151,7 +235,7 @@
 }
 
 .iconCon:hover{
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(0,0,0,0.1);
 }
 
 .iconCon.dark:hover{
@@ -182,7 +266,7 @@
 }
 
 .sidebar  {
-  width: clamp(20rem, 22%, 22rem);
+  width: clamp(20rem, 22vw, 22rem);
   min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
   display: flex;
   flex-direction: column;
@@ -191,13 +275,9 @@
   align-items: center;
 }
 
-.sidebar.collapsed  {
-  
-}
-
 .sideLink {
-  width: 95%;
-  height: 3.5rem;
+  width: 100%;
+  height: 4rem;
   /* background-color: aquamarine; */
   display: flex;
   flex-direction: row;
@@ -206,6 +286,29 @@
   text-decoration: none;
   border-radius: 0 2rem 2rem 0;
 }
+
+.sideLink .icon{
+  width: clamp(6rem, 6.6vw, 6.6rem);
+  font-size: 1.4rem;
+}
+
+.sidebar.collapsed  {
+  width: clamp(6rem, 6.6vw, 6.6rem);
+}
+
+.sidebar.collapsed .sideLink {
+  width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2rem;
+}
+
+.sidebar.collapsed .sideLink .icon{
+  width: 4rem;
+}
+
+
 
 .sideLink.active  {
   background-color: rgb(253, 228, 114)!important;
@@ -231,13 +334,8 @@
   background-color: rgb(59, 59, 59);
 }
 
-.sideLink .icon{
-  width: 30%;
-  font-size: 1.4rem;
-}
-
 .sideLink div{
-  width: 70%;
+  width: calc(100% - clamp(6rem, 6.6vw, 6.6rem));
   /* background-color: aqua; */
   text-align: left;
   font-size: 1.1rem;
@@ -270,7 +368,7 @@
 } */
 
 .notesCon, .trashedCon, .archivedCon {
-  width: calc(100vw - clamp(16rem, 22%, 20rem));
+  width: calc(100vw - clamp(16rem, 22vw, 20rem));
   min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
   /* border: 1px solid green; */
   padding: 2rem 3rem;
@@ -414,6 +512,114 @@
   border: 2px solid rgb(0, 219, 0);
 }
 
+.modalSettingsCon  {
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+}
+
+.modalSettings  {
+  position: fixed;
+  width: 23rem;
+  top: clamp(8rem, 10vw, 15rem);
+  left: calc(50vw - 10rem);
+  height: 30rem;
+  background-color: white;
+  border-radius: 0.3rem;
+  
+}
+
+.modalSettings .header{
+  font-size: 1.6rem;
+  width: 100%;
+  height: 3rem;
+
+  /* background-color: #cecece; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.3rem 0;
+}
+
+.modalSettings .section{
+  width: 95%;
+  padding: 0.5rem 1rem;
+  /* background-color: #aaa; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: rgb(110, 110, 110);
+}
+
+.modalSettings .item .checkBox  {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 0.1rem solid rgb(155, 155, 155);
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.modalSettings .checkBox .svg {
+  width: 2rem;
+  font-size: 1.1rem;
+  color: grey;
+}
+
+.modalSettings .footer  {
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+  padding-left: 10rem;
+  /* background-color: #999; */
+}
+
+.modalSettings .footer :last-child  {
+  margin-left: 1rem;
+  color:  rgb(0, 170, 170);
+}
+
+.modalSettings .footer :last-child:hover  {
+  background-color: rgb(218, 247, 255);
+}
+
+.modalSettings .footer *{
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.3rem;
+  background-color: transparent;
+}
+
+.modalSettings .footer *:hover{
+  background-color: rgb(0,0,0,0.1);
+}
+
+.section .item:not(:first-child)  {
+  margin-top: 0.3rem;
+}
+
+
+
+.section .heading {
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: flex-start; */
+  font-weight: 600;
+  color: rgb(35, 137, 255);
+  font-size: 1rem;
+}
+
+.section .item  {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .newNote, .modalNote  {
   width: clamp(40rem, 50%, 50rem);
   padding: 1rem;
@@ -473,17 +679,33 @@
 }
 
 
-::-webkit-scrollbar {
-  width: 0.7rem;
+.newNote .newDescription::-webkit-scrollbar, .modalNote .newDescription::-webkit-scrollbar {
+  width: 0.4rem;
   cursor: pointer;
+  
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #ddd;
+  background-color: transparent;
+  border-radius: 0.2rem;
 }
 
-::-webkit-scrollbar-thumb {
+.newNote .newDescription::-webkit-scrollbar-thumb, .modalNote .newDescription::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 0.3rem;
+}
+
+.newNote .newDescription.dark::-webkit-scrollbar-thumb, .modalNote .newDescription.dark::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 0.3rem;
+}
+
+.newNote .newDescription::-webkit-scrollbar-thumb:hover, .modalNote .newDescription::-webkit-scrollbar-thumb:hover {
   background-color: #777;
+}
+
+.newNote .newDescription.dark::-webkit-scrollbar-thumb:hover, .modalNote .newDescription.dark::-webkit-scrollbar-thumb:hover {
+  background-color: #666;
 }
 
 .newNote .actions .right .bottom, .modalNote .actions .right .bottom {
@@ -636,6 +858,35 @@
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+}
+
+.note .actions .right{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.note .actions .right .top{
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.note .actions .right button{
+  width: 4rem;
+  border: none;
+  color: #777;
+  font-weight: 600;
+  border-radius: 0.3rem;
+  background-color: transparent;
+}
+
+.note .actions .right button:hover{
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #555;
 }
  
 .note .iconCon{

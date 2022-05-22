@@ -3,30 +3,28 @@ import { connect } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { FaLightbulb, FaArchive, FaTrash } from "react-icons/fa";
-import ModalNote from "../components/ModalNote";
 
-const UserHome = ({ theme, isModalNoteActive }) => {
+const UserHome = ({ theme, isSidebarExpanded }) => {
   return (
     <div className="userHome">
       <Navbar />
       <div className="restBody">
-        <div className="sidebar">
+        <div className={`sidebar${isSidebarExpanded ? "" : " collapsed"}`}>
           <NavLink to="/user-notes" end className={`sideLink ${theme}`}>
             <FaLightbulb className="icon" />
-            <div>Notes</div>
+            {isSidebarExpanded && <div>Notes</div>}
           </NavLink>
           <NavLink to="/user-notes/archive" className={`sideLink ${theme}`}>
             <FaArchive className="icon" />
-            <div>Archive</div>
+            {isSidebarExpanded && <div>Archive</div>}
           </NavLink>
           <NavLink to="/user-notes/trash" className={`sideLink ${theme}`}>
             <FaTrash className="icon" />
-            <div>Trash</div>
+            {isSidebarExpanded && <div>Trash</div>}
           </NavLink>
         </div>
         <Outlet />
       </div>
-      {isModalNoteActive && <ModalNote />}
     </div>
   );
 };
@@ -35,6 +33,7 @@ const mapStateToProps = (state) => {
   return {
     theme: state.app.theme,
     isModalNoteActive: state.app.isModalNoteActive,
+    isSidebarExpanded: state.app.isSidebarExpanded,
   };
 };
 

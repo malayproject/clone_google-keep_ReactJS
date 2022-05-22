@@ -11,7 +11,9 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { usersColRef } from "../firebaseFolder/FirebaseApp";
 import {
+  deleteForever,
   getTrashedNotes,
+  restoreNote,
   setAndShowModalNote,
 } from "../redux/notes/NotesActions";
 import { MdRestoreFromTrash, MdDeleteForever } from "react-icons/md";
@@ -23,36 +25,10 @@ const Trashed = ({
   theme,
   getTrashedNotes,
   setAndShowModalNote,
+  restoreNote,
+  deleteForever,
   resetCreateNoteConActive,
 }) => {
-  const deleteForever = async (noteId) => {
-    await deleteDoc(
-      doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`)
-    );
-    try {
-      getTrashedNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const restoreNote = async (noteId) => {
-    try {
-      await updateDoc(
-        doc(collection(usersColRef, `/${currUser.uid}/notes`), `${noteId}`),
-        {
-          isTrashed: false,
-          isArchived: false,
-          isPinned: false,
-          editedOn: new Date().toString(),
-        }
-      );
-      getTrashedNotes(currUser.uid);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   useEffect(() => {
     try {
       getTrashedNotes(currUser.uid);
@@ -96,7 +72,7 @@ const Trashed = ({
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                setAndShowModalNote(trashedNote);
+                setAndShowModalNote(trashedNote, "trash");
               }}
             >
               <div className="header">
@@ -109,7 +85,7 @@ const Trashed = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      restoreNote(trashedNote.id);
+                      restoreNote(trashedNote.id, currUser.uid);
                     }}
                   >
                     <MdRestoreFromTrash className="icon" />
@@ -119,7 +95,7 @@ const Trashed = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      deleteForever(trashedNote.id);
+                      deleteForever(trashedNote.id, "trash", currUser.uid);
                     }}
                   >
                     <MdDeleteForever className="icon" />
@@ -146,7 +122,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getTrashedNotes: (userId) => dispatch(getTrashedNotes(userId)),
-    setAndShowModalNote: (note) => dispatch(setAndShowModalNote(note)),
+    setAndShowModalNote: (note, source) =>
+      dispatch(setAndShowModalNote(note, source)),
+    restoreNote: (noteId, userId) => dispatch(restoreNote(noteId, userId)),
+    deleteForever: (noteId, source, userId) =>
+      dispatch(deleteForever(noteId, source, userId)),
   };
 };
 
