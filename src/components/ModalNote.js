@@ -186,7 +186,7 @@ const ModalNote = ({ modalNote, modalSrc, theme, resetAndHideModalNote }) => {
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.app.theme,
+    theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     modalNote: state.notes.modalNote,
     modalSrc: state.notes.modalSrc,
   };

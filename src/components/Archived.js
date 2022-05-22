@@ -241,7 +241,7 @@ const mapStateToProps = (state) => {
   return {
     currUser: state.auth.currUser,
     notes: state.notes.notes,
-    theme: state.app.theme,
+    theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     isBackgroundPaletteActive: state.app.isBackgroundPaletteActive,
   };
 };

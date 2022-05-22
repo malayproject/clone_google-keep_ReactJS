@@ -19,7 +19,6 @@ import Trashed from "./components/Trashed";
 import { setAuthState } from "./redux/auth/AuthActions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseFolder/FirebaseApp";
-import SettingsPage from "./pages/SettingsPage";
 import ModalSettings from "./components/ModalSettings";
 import ModalNote from "./components/ModalNote";
 
@@ -59,7 +58,6 @@ function App({
             <Route path="trash" element={<Trashed />} />
           </Route>
           <Route path="login" element={<LoginPage />} />
-          <Route path="settings" element={<SettingsPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
@@ -75,7 +73,7 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     currUser: state.auth.currUser,
-    theme: state.app.theme,
+    theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     isModalNoteActive: state.app.isModalNoteActive,
     isModalSettingsActive: state.app.isModalSettingsActive,
   };

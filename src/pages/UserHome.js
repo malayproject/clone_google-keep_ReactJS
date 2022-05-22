@@ -31,7 +31,7 @@ const UserHome = ({ theme, isSidebarExpanded }) => {
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.app.theme,
+    theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     isModalNoteActive: state.app.isModalNoteActive,
     isSidebarExpanded: state.app.isSidebarExpanded,
   };

@@ -299,7 +299,7 @@ const CreateOrEditNote = ({
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.app.theme,
+    theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     currUser: state.auth.currUser,
     isBackgroundPaletteActive: state.app.isBackgroundPaletteActive,
   };

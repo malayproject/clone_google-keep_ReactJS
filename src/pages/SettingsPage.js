@@ -24,7 +24,7 @@ const Settingspage = ({ theme, setDark, setLight }) => {
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.app.theme,
+    theme: state.app.settingsParameters.darkTheme ? "dark" : "",
   };
 };
 
