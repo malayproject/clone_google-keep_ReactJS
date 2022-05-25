@@ -6,6 +6,10 @@
 
 ![loginpage image](./screenshots/keep-loginpage.JPG?raw=true)
 
+<p align="center">
+  <img src="./screenshots/keep-loginpage.JPG" />
+</p>
+
 ## Settings modal
 
 ![settings modal image](./screenshots/keep-settings-modal.JPG?raw=true)
