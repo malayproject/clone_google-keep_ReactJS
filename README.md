@@ -1,18 +1,18 @@
-# Homepage
+## Homepage
 
-![homepage image](public\keep-homepage.JPG?raw=true)
+![homepage image](screenshots\keep-homepage.JPG?raw=true)
 
-# Loginpage
+## Loginpage
 
-![loginpage image](public\keep-loginpage.JPG?raw=true)
+![loginpage image](screenshots\keep-loginpage.JPG?raw=true)
 
-# Settings modal
+## Settings modal
 
-![loginpage image](public\keep-settings-modal.JPG?raw=true)
+![settings modal image](screenshots\keep-settings-modal.JPG?raw=true)
 
-# Settings modal
+## darkmode
 
-![darkmode image](public\keep-darkmode.JPG?raw=true)
+![darkmode image](screenshots\keep-darkmode.JPG?raw=true)
 
 # Getting Started with Create React App
 
