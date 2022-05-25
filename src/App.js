@@ -21,6 +21,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseFolder/FirebaseApp";
 import ModalSettings from "./components/ModalSettings";
 import ModalNote from "./components/ModalNote";
+import ModalUserAndLogout from "./components/ModalUserAndLogout";
 
 function App({
   isAuthenticated,
@@ -29,6 +30,7 @@ function App({
   setAuthState,
   isModalNoteActive,
   isModalSettingsActive,
+  isModalUserAndLogoutActive,
 }) {
   const navigate = useNavigate();
 
@@ -64,6 +66,7 @@ function App({
       </Routes>
       {isModalSettingsActive && <ModalSettings />}
       {isModalNoteActive && <ModalNote />}
+      {isModalUserAndLogoutActive && <ModalUserAndLogout />}
       <NotificationContainer />
     </div>
   );
@@ -76,6 +79,7 @@ const mapStateToProps = (state) => {
     theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     isModalNoteActive: state.app.isModalNoteActive,
     isModalSettingsActive: state.app.isModalSettingsActive,
+    isModalUserAndLogoutActive: state.app.isModalUserAndLogoutActive,
   };
 };
 

@@ -160,7 +160,7 @@ const ModalNote = ({ modalNote, modalSrc, theme, resetAndHideModalNote }) => {
                   : "note in trash . "
                 : "") +
                 "Edited " +
-                modalNote.editedOn.slice(4, 10)}
+                Date(modalNote.editedOn).slice(4, 10)}
             </div>
             <div className="bottom">
               <button

@@ -34,8 +34,8 @@ const CreateOrEditNote = ({
     isPinned: false,
     isArchived: false,
     isTrashed: false,
-    editedOn: "",
-    createdOn: "",
+    editedOn: 0,
+    createdOn: 0,
   };
   const [newNoteState, setNewNoteState] = useState(initialNewNoteState);
 
@@ -57,8 +57,8 @@ const CreateOrEditNote = ({
           description: newNoteState.description,
           colorKey: newNoteState.colorKey,
           backImageKey: newNoteState.backImageKey,
-          editedOn: new Date().toString(),
-          createdOn: new Date().toString(),
+          editedOn: new Date().valueOf(),
+          createdOn: new Date().valueOf(),
           isPinned: newNoteState.isPinned,
           isArchived: newNoteState.isArchived,
           isTrashed: newNoteState.isTrashed,
@@ -88,6 +88,7 @@ const CreateOrEditNote = ({
       isPinned: isPinned,
       isArchived: false,
       isTrashed: false,
+      editedOn: new Date().valueOf(),
     }));
   };
 
@@ -98,6 +99,7 @@ const CreateOrEditNote = ({
         isArchived: true,
         isPinned: false,
         isTrashed: false,
+        editedOn: new Date().valueOf(),
       }));
     }
   };
@@ -114,6 +116,7 @@ const CreateOrEditNote = ({
         isArchived: false,
         isPinned: false,
         isTrashed: true,
+        editedOn: new Date().valueOf(),
       }));
     }
   };
@@ -152,7 +155,7 @@ const CreateOrEditNote = ({
     setNewNoteState((prev) => ({
       ...prev,
       colorKey: selectedColKey,
-      editedOn: new Date().toString(),
+      editedOn: new Date().valueOf(),
     }));
   };
 
@@ -160,7 +163,7 @@ const CreateOrEditNote = ({
     setNewNoteState((prev) => ({
       ...prev,
       backImageKey: selectedImgKey,
-      editedOn: new Date().toString(),
+      editedOn: new Date().valueOf(),
     }));
   };
 

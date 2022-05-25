@@ -33,7 +33,8 @@ export const setTrashedNotes = (trashedNotes) => {
   };
 };
 
-export const getAndSetActiveNotes = (userId) => {
+export const getAndSetActiveNotes = (userId, isNewestModeActive) => {
+  console.log(`getAndSetActiveNotes ${isNewestModeActive}`);
   return async (dispatch) => {
     try {
       const userNotesColRef = collection(usersColRef, `/${userId}/notes`);
@@ -61,8 +62,16 @@ export const getAndSetActiveNotes = (userId) => {
       );
       dispatch(
         setActiveNotes({
-          pinned: pinnedNotes,
-          unPinned: unPinnedNotes,
+          pinned: pinnedNotes.sort((a, b) =>
+            isNewestModeActive
+              ? a.editedOn - b.editedOn
+              : b.editedOn - a.editedOn
+          ),
+          unPinned: unPinnedNotes.sort((a, b) =>
+            isNewestModeActive
+              ? a.editedOn - b.editedOn
+              : b.editedOn - a.editedOn
+          ),
         })
       );
     } catch (error) {
@@ -71,7 +80,8 @@ export const getAndSetActiveNotes = (userId) => {
   };
 };
 
-export const getAndSetArchivedNotes = (userId) => {
+export const getAndSetArchivedNotes = (userId, isNewestModeActive) => {
+  console.log(`getAndSetArchivedNotes ${isNewestModeActive}`);
   return async (dispatch) => {
     const userNotesColRef = collection(usersColRef, `/${userId}/notes`);
     const archivedNotesQuerry = query(
@@ -83,11 +93,18 @@ export const getAndSetArchivedNotes = (userId) => {
     archivedNotesSnap.forEach((doc) => {
       archivedNotes.push({ ...doc.data(), id: doc.id });
     });
-    dispatch(setArchivedNotes(archivedNotes));
+    dispatch(
+      setArchivedNotes(
+        archivedNotes.sort((a, b) =>
+          isNewestModeActive ? a.editedOn - b.editedOn : b.editedOn - a.editedOn
+        )
+      )
+    );
   };
 };
 
-export const getTrashedNotes = (userId) => {
+export const getTrashedNotes = (userId, isNewestModeActive) => {
+  console.log(`getTrashedNotes ${isNewestModeActive}`);
   return async (dispatch) => {
     const userNotesColRef = collection(usersColRef, `/${userId}/notes`);
     const trashedNotesQuerry = query(
@@ -99,7 +116,13 @@ export const getTrashedNotes = (userId) => {
     trashedNotesSnap.forEach((doc) =>
       trashedNotes.push({ ...doc.data(), id: doc.id })
     );
-    dispatch(setTrashedNotes(trashedNotes));
+    dispatch(
+      setTrashedNotes(
+        trashedNotes.sort((a, b) =>
+          isNewestModeActive ? a.editedOn - b.editedOn : b.editedOn - a.editedOn
+        )
+      )
+    );
   };
 };
 
@@ -112,7 +135,7 @@ export const archiveNote = (noteId, userId) => {
           isTrashed: false,
           isArchived: true,
           isPinned: false,
-          editedOn: new Date().toString(),
+          editedOn: new Date().valueOf(),
         }
       );
       dispatch(getAndSetActiveNotes(userId));
@@ -132,7 +155,7 @@ export const unArchiveNote = (noteId, userId) => {
           isTrashed: false,
           isArchived: false,
           isPinned: false,
-          editedOn: new Date().toString(),
+          editedOn: new Date().valueOf(),
         }
       );
       dispatch(getAndSetArchivedNotes(userId));
@@ -151,8 +174,8 @@ export const copyNote = (note, userId) => {
         description: note.description,
         colorKey: note.colorKey,
         backImageKey: note.backImageKey,
-        editedOn: new Date().toString(),
-        createdOn: new Date().toString(),
+        editedOn: new Date().valueOf(),
+        createdOn: new Date().valueOf(),
         isPinned: note.isPinned,
         isArchived: note.isArchived,
         isTrashed: note.isTrashed,
@@ -176,7 +199,7 @@ export const pinNote = (noteId, source, userId) => {
         {
           isPinned: true,
           isArchived: false,
-          editedOn: new Date().toString(),
+          editedOn: new Date().valueOf(),
         }
       );
       source === "notes"
@@ -197,7 +220,7 @@ export const unPinNote = (noteId, userId) => {
         {
           isPinned: false,
           isArchived: false,
-          editedOn: new Date().toString(),
+          editedOn: new Date().valueOf(),
         }
       );
       dispatch(getAndSetActiveNotes(userId));
@@ -217,7 +240,7 @@ export const restoreNote = (noteId, userId) => {
           isTrashed: false,
           isArchived: false,
           isPinned: false,
-          editedOn: new Date().toString(),
+          editedOn: new Date().valueOf(),
         }
       );
       dispatch(getTrashedNotes(userId));
@@ -237,7 +260,7 @@ export const deleteNote = (noteId, isArchived, userId) => {
           isTrashed: true,
           isArchived: false,
           isPinned: false,
-          editedOn: new Date().toString(),
+          editedOn: new Date().valueOf(),
         }
       );
       isArchived

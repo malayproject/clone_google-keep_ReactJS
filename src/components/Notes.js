@@ -41,6 +41,7 @@ const Notes = ({
   getAndSetActiveNotes,
   isCreateNoteConActive,
   isBackgroundPaletteActive,
+  isNewestModeActive,
   setIsCreateNoteConActive,
   resetIsCreateNoteConActive,
   setIsBackgroundPaletteActive,
@@ -80,7 +81,7 @@ const Notes = ({
           editedOn: new Date().toString(),
         }
       );
-      getAndSetActiveNotes(currUser.uid);
+      getAndSetActiveNotes(currUser.uid, isNewestModeActive);
     } catch (error) {
       console.log(error.message);
     }
@@ -95,16 +96,21 @@ const Notes = ({
           editedOn: new Date().toString(),
         }
       );
-      getAndSetActiveNotes(currUser.uid);
+      getAndSetActiveNotes(currUser.uid, isNewestModeActive);
     } catch (error) {
       console.log(error.message);
     }
   };
 
   useEffect(() => {
+    console.log("notes useEffect on isNewestModeActive");
+    getAndSetActiveNotes(currUser.uid, isNewestModeActive);
+  }, [isNewestModeActive]);
+
+  useEffect(() => {
     resetIsCreateNoteConActive();
     console.log("notes useEffect");
-    getAndSetActiveNotes(currUser.uid);
+    getAndSetActiveNotes(currUser.uid, isNewestModeActive);
   }, []);
 
   return (
@@ -397,12 +403,14 @@ const mapStateToProps = (state) => {
     theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     isCreateNoteConActive: state.app.isCreateNoteConActive,
     isBackgroundPaletteActive: state.app.isBackgroundPaletteActive,
+    isNewestModeActive: state.app.settingsParameters.newItemsAtBottom,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAndSetActiveNotes: (userId) => dispatch(getAndSetActiveNotes(userId)),
+    getAndSetActiveNotes: (userId, isNewestModeActive) =>
+      dispatch(getAndSetActiveNotes(userId, isNewestModeActive)),
     setIsCreateNoteConActive: () => dispatch(setIsCreateNoteConActive()),
     resetIsCreateNoteConActive: () => dispatch(resetIsCreateNoteConActive()),
     setIsBackgroundPaletteActive: () =>

@@ -36,6 +36,7 @@ const Archived = ({
   theme,
   getAndSetArchivedNotes,
   isBackgroundPaletteActive,
+  isNewestModeActive,
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
   setAndShowModalNote,
@@ -72,7 +73,7 @@ const Archived = ({
           editedOn: new Date().toString(),
         }
       );
-      getAndSetArchivedNotes(currUser.uid);
+      getAndSetArchivedNotes(currUser.uid, isNewestModeActive);
     } catch (error) {
       console.log(error.message);
     }
@@ -87,15 +88,20 @@ const Archived = ({
           editedOn: new Date().toString(),
         }
       );
-      getAndSetArchivedNotes(currUser.uid);
+      getAndSetArchivedNotes(currUser.uid, isNewestModeActive);
     } catch (error) {
       console.log(error.message);
     }
   };
 
   useEffect(() => {
+    console.log("notes useEffect on isNewestModeActive");
+    getAndSetArchivedNotes(currUser.uid, isNewestModeActive);
+  }, [isNewestModeActive]);
+
+  useEffect(() => {
     try {
-      getAndSetArchivedNotes(currUser.uid);
+      getAndSetArchivedNotes(currUser.uid, isNewestModeActive);
     } catch (error) {
       console.log(error.message);
     }
@@ -243,13 +249,14 @@ const mapStateToProps = (state) => {
     notes: state.notes.notes,
     theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     isBackgroundPaletteActive: state.app.isBackgroundPaletteActive,
+    isNewestModeActive: state.app.settingsParameters.newItemsAtBottom,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAndSetArchivedNotes: (userId) =>
-      dispatch(getAndSetArchivedNotes(userId)),
+    getAndSetArchivedNotes: (userId, isNewestModeActive) =>
+      dispatch(getAndSetArchivedNotes(userId, isNewestModeActive)),
     setIsBackgroundPaletteActive: () =>
       dispatch(setIsBackgroundPaletteActive()),
     resetIsBackgroundPaletteActive: () =>

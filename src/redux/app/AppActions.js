@@ -14,6 +14,8 @@ import {
   RESET_MODAL_SETTINGS_ACTIVE,
   SET_SETTINGS_PARAMETERS,
   RESET_SETTINGS_PARAMETERS,
+  SET_MODAL_USER_AND_LOGOUT_ACTIVE,
+  RESET_MODAL_USER_AND_LOGOUT_ACTIVE,
 } from "./AppActionTypes";
 
 export const loading = () => {
@@ -101,5 +103,17 @@ export const setSettingsParameters = (settings) => {
 export const resetSettingsParameters = () => {
   return {
     type: RESET_SETTINGS_PARAMETERS,
+  };
+};
+
+export const setModalUserAndLogoutActive = () => {
+  return {
+    type: SET_MODAL_USER_AND_LOGOUT_ACTIVE,
+  };
+};
+
+export const resetModalUserAndLogoutActive = () => {
+  return {
+    type: RESET_MODAL_USER_AND_LOGOUT_ACTIVE,
   };
 };

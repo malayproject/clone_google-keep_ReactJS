@@ -4,8 +4,11 @@ import { logout } from "../redux/auth/AuthActions";
 import { FaBars, FaCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import {
+  resetModalUserAndLogoutActive,
   resetSidebarExpand,
   setModalSettingsActive,
+  setModalUserAndLogoutActive,
+  resetModalSettingsActive,
   setSidebarExpand,
 } from "../redux/app/AppActions";
 import Keep from "../images/clone-keep.svg";
@@ -18,6 +21,9 @@ const Navbar = ({
   setSidebarExpand,
   resetSidebarExpand,
   setModalSettingsActive,
+  setModalUserAndLogoutActive,
+  resetModalUserAndLogoutActive,
+  isModalUserAndLogoutActive,
 }) => {
   const navigate = useNavigate();
   return (
@@ -45,11 +51,15 @@ const Navbar = ({
           <FaCog className="icon" />
           <div className="info">Settings</div>
         </div>
-        <div className={`iconCon ${theme} hoverable`}>
+        <div className={`iconCon ${theme} hoverable profile`}>
           <img
             src={currUser.photoURL}
             className="profileImg"
-            onClick={logout}
+            onClick={() => {
+              isModalUserAndLogoutActive
+                ? resetModalUserAndLogoutActive()
+                : setModalUserAndLogoutActive();
+            }}
           />
           <div className="info">
             User Account
@@ -69,6 +79,7 @@ const mapStateToProps = (state) => {
     theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     currUser: state.auth.currUser,
     isSidebarExpanded: state.app.isSidebarExpanded,
+    isModalUserAndLogoutActive: state.app.isModalUserAndLogoutActive,
   };
 };
 
@@ -78,6 +89,9 @@ const mapDispatchToProps = (dispatch) => {
     setSidebarExpand: () => dispatch(setSidebarExpand()),
     resetSidebarExpand: () => dispatch(resetSidebarExpand()),
     setModalSettingsActive: () => dispatch(setModalSettingsActive()),
+    setModalUserAndLogoutActive: () => dispatch(setModalUserAndLogoutActive()),
+    resetModalUserAndLogoutActive: () =>
+      dispatch(resetModalUserAndLogoutActive()),
   };
 };
 

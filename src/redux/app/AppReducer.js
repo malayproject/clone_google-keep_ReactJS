@@ -17,6 +17,8 @@ import {
   RESET_SETTINGS_PARAMETERS,
   SET_MODAL_SETTINGS_ACTIVE,
   RESET_MODAL_SETTINGS_ACTIVE,
+  SET_MODAL_USER_AND_LOGOUT_ACTIVE,
+  RESET_MODAL_USER_AND_LOGOUT_ACTIVE,
 } from "./AppActionTypes";
 const initialState = {
   loading: false,
@@ -30,6 +32,7 @@ const initialState = {
     newItemsAtBottom: false,
     darkTheme: false,
   },
+  isModalUserAndLogoutActive: false,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -116,12 +119,39 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         isModalSettingsActive: true,
+        isModalUserAndLogoutActive: false,
       };
     case RESET_MODAL_SETTINGS_ACTIVE:
       return {
         ...state,
         isModalSettingsActive: false,
       };
+    case SET_MODAL_USER_AND_LOGOUT_ACTIVE:
+      return {
+        ...state,
+        isModalUserAndLogoutActive: true,
+      };
+    case RESET_MODAL_USER_AND_LOGOUT_ACTIVE:
+      return {
+        ...state,
+        isModalUserAndLogoutActive: false,
+      };
+    // case SET_ADD_NEW_NOTES_TO_BOTTOM:
+    //   return {
+    //     ...state,
+    //     settingsParameters: {
+    //       ...state.settingsParameters,
+    //       newItemsAtBottom: true,
+    //     },
+    //   };
+    // case RESET_ADD_NEW_NOTES_TO_BOTTOM:
+    //   return {
+    //     ...state,
+    //     settingsParameters: {
+    //       ...state.settingsParameters,
+    //       newItemsAtBottom: false,
+    //     },
+    //   };
     default:
       return state;
   }

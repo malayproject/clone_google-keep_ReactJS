@@ -28,10 +28,16 @@ const Trashed = ({
   restoreNote,
   deleteForever,
   resetCreateNoteConActive,
+  isNewestModeActive,
 }) => {
   useEffect(() => {
+    console.log("notes useEffect on isNewestModeActive");
+    getTrashedNotes(currUser.uid, isNewestModeActive);
+  }, [isNewestModeActive]);
+
+  useEffect(() => {
     try {
-      getTrashedNotes(currUser.uid);
+      getTrashedNotes(currUser.uid, isNewestModeActive);
     } catch (error) {
       console.log(error.message);
     }
@@ -116,12 +122,14 @@ const mapStateToProps = (state) => {
     currUser: state.auth.currUser,
     notes: state.notes.notes,
     theme: state.app.settingsParameters.darkTheme ? "dark" : "",
+    isNewestModeActive: state.app.settingsParameters.newItemsAtBottom,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getTrashedNotes: (userId) => dispatch(getTrashedNotes(userId)),
+    getTrashedNotes: (userId, isNewestModeActive) =>
+      dispatch(getTrashedNotes(userId, isNewestModeActive)),
     setAndShowModalNote: (note, source) =>
       dispatch(setAndShowModalNote(note, source)),
     restoreNote: (noteId, userId) => dispatch(restoreNote(noteId, userId)),

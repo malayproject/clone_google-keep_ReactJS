@@ -41,10 +41,12 @@ const ModalSettings = ({
 
   return (
     <div
-      className="modalSettingsCon"
+      className={`modalSettingsCon ${
+        settingsParameters.darkTheme ? "dark" : ""
+      }`}
       onClick={(e) => {
         e.stopPropagation();
-        if (e.target.className === "modalSettingsCon") {
+        if (e.target.classList.contains("modalSettingsCon")) {
           resetModalSettingsActive();
         }
       }}
