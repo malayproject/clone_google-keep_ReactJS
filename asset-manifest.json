@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/clone_google-keep_ReactJS/static/css/main.a716edd3.css",
+    "main.js": "/clone_google-keep_ReactJS/static/js/main.17582683.js",
+    "static/js/787.037aad9a.chunk.js": "/clone_google-keep_ReactJS/static/js/787.037aad9a.chunk.js",
+    "static/media/clone-keep.svg": "/clone_google-keep_ReactJS/static/media/clone-keep.45ec995c2e3b83e72d6bf3d0ad063e90.svg",
+    "static/media/notification.svg?s3g3t9": "/clone_google-keep_ReactJS/static/media/notification.5d0158671dd860c714c4.svg",
+    "static/media/notification.eot": "/clone_google-keep_ReactJS/static/media/notification.3657084dc0419605a91c.eot",
+    "static/media/notification.woff?s3g3t9": "/clone_google-keep_ReactJS/static/media/notification.c392cd33d9d9de730f9d.woff",
+    "static/media/notification.ttf?s3g3t9": "/clone_google-keep_ReactJS/static/media/notification.c5d9251ea82e42f75381.ttf",
+    "index.html": "/clone_google-keep_ReactJS/index.html",
+    "static/media/no-color.svg": "/clone_google-keep_ReactJS/static/media/no-color.7ae3a09503b3418fe59ebcb922dfb101.svg",
+    "main.a716edd3.css.map": "/clone_google-keep_ReactJS/static/css/main.a716edd3.css.map",
+    "main.17582683.js.map": "/clone_google-keep_ReactJS/static/js/main.17582683.js.map",
+    "787.037aad9a.chunk.js.map": "/clone_google-keep_ReactJS/static/js/787.037aad9a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a716edd3.css",
+    "static/js/main.17582683.js"
+  ]
+}
