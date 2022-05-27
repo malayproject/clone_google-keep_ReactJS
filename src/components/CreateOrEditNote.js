@@ -25,6 +25,7 @@ const CreateOrEditNote = ({
   isBackgroundPaletteActive,
   setIsBackgroundPaletteActive,
   resetIsBackgroundPaletteActive,
+  isNewestModeActive,
 }) => {
   const initialNewNoteState = {
     title: "",
@@ -64,7 +65,7 @@ const CreateOrEditNote = ({
           isTrashed: newNoteState.isTrashed,
         }
       );
-      getAndSetActiveNotes(currUser.uid);
+      getAndSetActiveNotes(currUser.uid, isNewestModeActive);
     } catch (error) {
       console.log(error.message);
     }
@@ -305,12 +306,14 @@ const mapStateToProps = (state) => {
     theme: state.app.settingsParameters.darkTheme ? "dark" : "",
     currUser: state.auth.currUser,
     isBackgroundPaletteActive: state.app.isBackgroundPaletteActive,
+    isNewestModeActive: state.app.settingsParameters.newItemsAtBottom,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAndSetActiveNotes: (userId) => dispatch(getAndSetActiveNotes(userId)),
+    getAndSetActiveNotes: (userId, isNewestModeActive) =>
+      dispatch(getAndSetActiveNotes(userId, isNewestModeActive)),
     setIsCreateNoteConActive: () => dispatch(setIsCreateNoteConActive()),
     resetIsCreateNoteConActive: () => dispatch(resetIsCreateNoteConActive()),
     setIsBackgroundPaletteActive: () =>

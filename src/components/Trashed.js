@@ -91,7 +91,11 @@ const Trashed = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      restoreNote(trashedNote.id, currUser.uid);
+                      restoreNote(
+                        trashedNote.id,
+                        currUser.uid,
+                        isNewestModeActive
+                      );
                     }}
                   >
                     <MdRestoreFromTrash className="icon" />
@@ -101,7 +105,12 @@ const Trashed = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      deleteForever(trashedNote.id, "trash", currUser.uid);
+                      deleteForever(
+                        trashedNote.id,
+                        "trash",
+                        currUser.uid,
+                        isNewestModeActive
+                      );
                     }}
                   >
                     <MdDeleteForever className="icon" />
@@ -132,9 +141,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(getTrashedNotes(userId, isNewestModeActive)),
     setAndShowModalNote: (note, source) =>
       dispatch(setAndShowModalNote(note, source)),
-    restoreNote: (noteId, userId) => dispatch(restoreNote(noteId, userId)),
-    deleteForever: (noteId, source, userId) =>
-      dispatch(deleteForever(noteId, source, userId)),
+    restoreNote: (noteId, userId, isNewestModeActive) =>
+      dispatch(restoreNote(noteId, userId, isNewestModeActive)),
+    deleteForever: (noteId, source, userId, isNewestModeActive) =>
+      dispatch(deleteForever(noteId, source, userId, isNewestModeActive)),
   };
 };
 

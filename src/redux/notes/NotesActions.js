@@ -60,6 +60,11 @@ export const getAndSetActiveNotes = (userId, isNewestModeActive) => {
       unPinnedNotesSnap.forEach((doc) =>
         unPinnedNotes.push({ ...doc.data(), id: doc.id })
       );
+      console.log(
+        pinnedNotes.sort((a, b) =>
+          isNewestModeActive ? a.editedOn - b.editedOn : b.editedOn - a.editedOn
+        )
+      );
       dispatch(
         setActiveNotes({
           pinned: pinnedNotes.sort((a, b) =>
@@ -126,7 +131,37 @@ export const getTrashedNotes = (userId, isNewestModeActive) => {
   };
 };
 
-export const archiveNote = (noteId, userId) => {
+export const updateModalNote = (note, source, userId, isNewestModeActive) => {
+  return async (dispatch) => {
+    try {
+      await updateDoc(
+        doc(collection(usersColRef, `/${userId}/notes`), `${note.id}`),
+        {
+          backImageKey: note.backImageKey,
+          colorKey: note.colorKey,
+          createdOn: note.createdOn,
+          description: note.description,
+          title: note.title,
+          isTrashed: note.isTrashed,
+          isArchived: note.isArchived,
+          isPinned: note.isPinned,
+          editedOn: new Date().valueOf(),
+        }
+      );
+      if (source === "notes")
+        dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
+      else if (source === "archive")
+        dispatch(getAndSetArchivedNotes(userId, isNewestModeActive));
+      else dispatch(getTrashedNotes(userId, isNewestModeActive));
+      dispatch(resetAndHideModalNote());
+      createNotification("NOTE_UPDATED")();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const archiveNote = (noteId, userId, isNewestModeActive) => {
   return async (dispatch) => {
     try {
       await updateDoc(
@@ -138,7 +173,7 @@ export const archiveNote = (noteId, userId) => {
           editedOn: new Date().valueOf(),
         }
       );
-      dispatch(getAndSetActiveNotes(userId));
+      dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
       createNotification("NOTE_ARCHIVED")();
     } catch (error) {
       console.log(error.message);
@@ -146,7 +181,28 @@ export const archiveNote = (noteId, userId) => {
   };
 };
 
-export const unArchiveNote = (noteId, userId) => {
+export const archiveModalNote = (noteId, userId, isNewestModeActive) => {
+  return async (dispatch) => {
+    try {
+      await updateDoc(
+        doc(collection(usersColRef, `/${userId}/notes`), `${noteId}`),
+        {
+          isTrashed: false,
+          isArchived: true,
+          isPinned: false,
+          editedOn: new Date().valueOf(),
+        }
+      );
+      dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
+      dispatch(resetAndHideModalNote());
+      createNotification("NOTE_ARCHIVED")();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const unArchiveNote = (noteId, userId, isNewestModeActive) => {
   return async (dispatch) => {
     try {
       await updateDoc(
@@ -158,7 +214,7 @@ export const unArchiveNote = (noteId, userId) => {
           editedOn: new Date().valueOf(),
         }
       );
-      dispatch(getAndSetArchivedNotes(userId));
+      dispatch(getAndSetArchivedNotes(userId, isNewestModeActive));
       createNotification("NOTE_UNARCHIVED")();
     } catch (error) {
       console.log(error.message);
@@ -166,7 +222,28 @@ export const unArchiveNote = (noteId, userId) => {
   };
 };
 
-export const copyNote = (note, userId) => {
+export const unArchiveModalNote = (noteId, userId, isNewestModeActive) => {
+  return async (dispatch) => {
+    try {
+      await updateDoc(
+        doc(collection(usersColRef, `/${userId}/notes`), `${noteId}`),
+        {
+          isTrashed: false,
+          isArchived: false,
+          isPinned: false,
+          editedOn: new Date().valueOf(),
+        }
+      );
+      dispatch(getAndSetArchivedNotes(userId, isNewestModeActive));
+      dispatch(resetAndHideModalNote());
+      createNotification("NOTE_UNARCHIVED")();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const copyNote = (note, userId, isNewestModeActive) => {
   return async (dispatch) => {
     try {
       const doc = await addDoc(collection(usersColRef, `/${userId}/notes`), {
@@ -181,8 +258,8 @@ export const copyNote = (note, userId) => {
         isTrashed: note.isTrashed,
       });
       note.isArchived
-        ? dispatch(getAndSetArchivedNotes(userId))
-        : dispatch(getAndSetActiveNotes(userId));
+        ? dispatch(getAndSetArchivedNotes(userId, isNewestModeActive))
+        : dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
       // debugger;
       createNotification("NOTE_COPIED")();
     } catch (error) {
@@ -191,7 +268,33 @@ export const copyNote = (note, userId) => {
   };
 };
 
-export const pinNote = (noteId, source, userId) => {
+export const copyModalNote = (note, userId, isNewestModeActive) => {
+  return async (dispatch) => {
+    try {
+      const doc = await addDoc(collection(usersColRef, `/${userId}/notes`), {
+        title: note.title,
+        description: note.description,
+        colorKey: note.colorKey,
+        backImageKey: note.backImageKey,
+        editedOn: new Date().valueOf(),
+        createdOn: new Date().valueOf(),
+        isPinned: note.isPinned,
+        isArchived: note.isArchived,
+        isTrashed: note.isTrashed,
+      });
+      note.isArchived
+        ? dispatch(getAndSetArchivedNotes(userId, isNewestModeActive))
+        : dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
+      dispatch(resetAndHideModalNote());
+      // debugger;
+      createNotification("NOTE_COPIED")();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const pinNote = (noteId, source, userId, isNewestModeActive) => {
   return async (dispatch) => {
     try {
       await updateDoc(
@@ -203,8 +306,8 @@ export const pinNote = (noteId, source, userId) => {
         }
       );
       source === "notes"
-        ? dispatch(getAndSetActiveNotes(userId))
-        : dispatch(getAndSetArchivedNotes(userId));
+        ? dispatch(getAndSetActiveNotes(userId, isNewestModeActive))
+        : dispatch(getAndSetArchivedNotes(userId, isNewestModeActive));
       createNotification("NOTE_PINNED")();
     } catch (error) {
       console.log(error.message);
@@ -212,7 +315,7 @@ export const pinNote = (noteId, source, userId) => {
   };
 };
 
-export const unPinNote = (noteId, userId) => {
+export const unPinNote = (noteId, userId, isNewestModeActive) => {
   return async (dispatch) => {
     try {
       await updateDoc(
@@ -223,7 +326,7 @@ export const unPinNote = (noteId, userId) => {
           editedOn: new Date().valueOf(),
         }
       );
-      dispatch(getAndSetActiveNotes(userId));
+      dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
       createNotification("NOTE_UNPINNED")();
     } catch (error) {
       console.log(error.message);
@@ -231,7 +334,7 @@ export const unPinNote = (noteId, userId) => {
   };
 };
 
-export const restoreNote = (noteId, userId) => {
+export const restoreNote = (noteId, userId, isNewestModeActive) => {
   return async (dispatch) => {
     try {
       await updateDoc(
@@ -243,7 +346,7 @@ export const restoreNote = (noteId, userId) => {
           editedOn: new Date().valueOf(),
         }
       );
-      dispatch(getTrashedNotes(userId));
+      dispatch(getTrashedNotes(userId, isNewestModeActive));
       createNotification("NOTE_RESTORED")();
     } catch (error) {
       console.log(error.message);
@@ -251,7 +354,34 @@ export const restoreNote = (noteId, userId) => {
   };
 };
 
-export const deleteNote = (noteId, isArchived, userId) => {
+export const restoreModalNote = (noteId, userId, isNewestModeActive) => {
+  return async (dispatch) => {
+    try {
+      await updateDoc(
+        doc(collection(usersColRef, `/${userId}/notes`), `${noteId}`),
+        {
+          isTrashed: false,
+          isArchived: false,
+          isPinned: false,
+          editedOn: new Date().valueOf(),
+        }
+      );
+      dispatch(getTrashedNotes(userId, isNewestModeActive));
+      dispatch(resetAndHideModalNote());
+      createNotification("NOTE_RESTORED")();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const deleteNote = (
+  noteId,
+  isArchived,
+  userId,
+  isNewestModeActive,
+  isModalNote
+) => {
   return async (dispatch) => {
     try {
       await updateDoc(
@@ -264,9 +394,10 @@ export const deleteNote = (noteId, isArchived, userId) => {
         }
       );
       isArchived
-        ? dispatch(getAndSetArchivedNotes(userId))
-        : dispatch(getAndSetActiveNotes(userId));
+        ? dispatch(getAndSetArchivedNotes(userId, isNewestModeActive))
+        : dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
       // setTimeout(createNotification("NOTE_DELETED"), 3000);
+      if (isModalNote) dispatch(resetAndHideModalNote());
       createNotification("NOTE_DELETED")();
     } catch (error) {
       console.log(error.message);
@@ -274,15 +405,41 @@ export const deleteNote = (noteId, isArchived, userId) => {
   };
 };
 
-export const deleteForever = (noteId, source, userId) => {
+export const deleteForever = (noteId, source, userId, isNewestModeActive) => {
   return async (dispatch) => {
     try {
       await deleteDoc(
         doc(collection(usersColRef, `/${userId}/notes`), `${noteId}`)
       );
-      if (source === "notes") dispatch(getAndSetActiveNotes(userId));
-      else if (source === "archive") dispatch(getAndSetArchivedNotes(userId));
+      if (source === "notes")
+        dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
+      else if (source === "archive")
+        dispatch(getAndSetArchivedNotes(userId, isNewestModeActive));
       else dispatch(getTrashedNotes(userId));
+      createNotification("NOTE_DELETED_FOREVER")();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const deleteModalForever = (
+  noteId,
+  source,
+  userId,
+  isNewestModeActive
+) => {
+  return async (dispatch) => {
+    try {
+      await deleteDoc(
+        doc(collection(usersColRef, `/${userId}/notes`), `${noteId}`)
+      );
+      if (source === "notes")
+        dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
+      else if (source === "archive")
+        dispatch(getAndSetArchivedNotes(userId, isNewestModeActive));
+      else dispatch(getTrashedNotes(userId));
+      dispatch(resetAndHideModalNote());
       createNotification("NOTE_DELETED_FOREVER")();
     } catch (error) {
       console.log(error.message);

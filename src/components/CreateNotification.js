@@ -6,6 +6,9 @@ export const createNotification = (type) => {
       case "NOTE_CREATED":
         NotificationManager.info("Note created", "", 3000);
         break;
+      case "NOTE_UPDATED":
+        NotificationManager.info("Note updated", "", 3000);
+        break;
       case "NOTE_COPIED":
         NotificationManager.info("Note copied", "", 3000);
         break;

@@ -50,7 +50,7 @@
   min-height: 12rem;
   max-height: 40rem;
   /* top: calc(50vh - 10rem); */
-  top: 20rem;
+  top: 15rem;
   left: calc(50vw - clamp(20rem, 25%, 25rem));
   border-radius: 0.4rem;
   /* box-shadow: 0 0 10rem 50rem rgba(75, 75, 75, 0.26); */

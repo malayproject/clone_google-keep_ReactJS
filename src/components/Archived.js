@@ -151,7 +151,12 @@ const Archived = ({
                   className={`iconCon ${theme} hoverable`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    pinNote(archivedNote.id, "archive", currUser.uid);
+                    pinNote(
+                      archivedNote.id,
+                      "archive",
+                      currUser.uid,
+                      isNewestModeActive
+                    );
                   }}
                 >
                   <BsPin className="icon" />
@@ -192,7 +197,7 @@ const Archived = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      copyNote(archivedNote, currUser.uid);
+                      copyNote(archivedNote, currUser.uid, isNewestModeActive);
                     }}
                   >
                     <MdContentCopy className="icon" />
@@ -202,7 +207,11 @@ const Archived = ({
                     className={`iconCon ${theme} hoverable`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      unArchiveNote(archivedNote.id, currUser.uid);
+                      unArchiveNote(
+                        archivedNote.id,
+                        currUser.uid,
+                        isNewestModeActive
+                      );
                     }}
                   >
                     <MdUnarchive className="icon" />
@@ -215,7 +224,8 @@ const Archived = ({
                       deleteNote(
                         archivedNote.id,
                         archivedNote.isArchived,
-                        currUser.uid
+                        currUser.uid,
+                        isNewestModeActive
                       );
                     }}
                   >
@@ -263,13 +273,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(resetIsBackgroundPaletteActive()),
     setAndShowModalNote: (note, source) =>
       dispatch(setAndShowModalNote(note, source)),
-    deleteNote: (noteId, isArchived, userId) => {
-      dispatch(deleteNote(noteId, isArchived, userId));
+    deleteNote: (noteId, isArchived, userId, isNewestModeActive) => {
+      dispatch(deleteNote(noteId, isArchived, userId, isNewestModeActive));
     },
-    copyNote: (note, userId) => dispatch(copyNote(note, userId)),
-    unArchiveNote: (noteId, userId) => dispatch(unArchiveNote(noteId, userId)),
-    pinNote: (noteId, source, userId) =>
-      dispatch(pinNote(noteId, source, userId)),
+    copyNote: (note, userId, isNewestModeActive) =>
+      dispatch(copyNote(note, userId, isNewestModeActive)),
+    unArchiveNote: (noteId, userId, isNewestModeActive) =>
+      dispatch(unArchiveNote(noteId, userId, isNewestModeActive)),
+    pinNote: (noteId, source, userId, isNewestModeActive) =>
+      dispatch(pinNote(noteId, source, userId, isNewestModeActive)),
   };
 };
 

@@ -174,7 +174,11 @@ const Notes = ({
                       className={`iconCon ${theme} hoverable`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        unPinNote(pinnedNote.id, currUser.uid);
+                        unPinNote(
+                          pinnedNote.id,
+                          currUser.uid,
+                          isNewestModeActive
+                        );
                       }}
                     >
                       <BsPinFill className="icon" />
@@ -216,7 +220,11 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          copyNote(pinnedNote, currUser.uid);
+                          copyNote(
+                            pinnedNote,
+                            currUser.uid,
+                            isNewestModeActive
+                          );
                         }}
                       >
                         <MdContentCopy className="icon" />
@@ -226,7 +234,11 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          archiveNote(pinnedNote.id, currUser.uid);
+                          archiveNote(
+                            pinnedNote.id,
+                            currUser.uid,
+                            isNewestModeActive
+                          );
                         }}
                       >
                         <MdArchive className="icon" />
@@ -239,7 +251,8 @@ const Notes = ({
                           deleteNote(
                             pinnedNote.id,
                             pinnedNote.isArchived,
-                            currUser.uid
+                            currUser.uid,
+                            isNewestModeActive
                           );
                         }}
                       >
@@ -301,7 +314,12 @@ const Notes = ({
                       className={`iconCon ${theme} hoverable`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        pinNote(unPinnedNote.id, "notes", currUser.uid);
+                        pinNote(
+                          unPinnedNote.id,
+                          "notes",
+                          currUser.uid,
+                          isNewestModeActive
+                        );
                       }}
                     >
                       <BsPin className="icon" />
@@ -343,7 +361,11 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          copyNote(unPinnedNote, currUser.uid);
+                          copyNote(
+                            unPinnedNote,
+                            currUser.uid,
+                            isNewestModeActive
+                          );
                         }}
                       >
                         <MdContentCopy className="icon" />
@@ -353,7 +375,11 @@ const Notes = ({
                         className={`iconCon ${theme} hoverable`}
                         onClick={(e) => {
                           e.stopPropagation();
-                          archiveNote(unPinnedNote.id, currUser.uid);
+                          archiveNote(
+                            unPinnedNote.id,
+                            currUser.uid,
+                            isNewestModeActive
+                          );
                         }}
                       >
                         <MdArchive className="icon" />
@@ -366,7 +392,8 @@ const Notes = ({
                           deleteNote(
                             unPinnedNote.id,
                             unPinnedNote.isArchived,
-                            currUser.uid
+                            currUser.uid,
+                            isNewestModeActive
                           );
                         }}
                       >
@@ -420,13 +447,16 @@ const mapDispatchToProps = (dispatch) => {
     setAndShowModalNote: (note, source) =>
       dispatch(setAndShowModalNote(note, source)),
     resetIsCreateNoteConActive: () => dispatch(resetIsCreateNoteConActive()),
-    deleteNote: (noteId, isArchived, userId) =>
-      dispatch(deleteNote(noteId, isArchived, userId)),
-    archiveNote: (noteId, userId) => dispatch(archiveNote(noteId, userId)),
-    copyNote: (note, userId) => dispatch(copyNote(note, userId)),
-    pinNote: (noteId, source, userId) =>
-      dispatch(pinNote(noteId, source, userId)),
-    unPinNote: (noteId, userId) => dispatch(unPinNote(noteId, userId)),
+    deleteNote: (noteId, isArchived, userId, isNewestModeActive) =>
+      dispatch(deleteNote(noteId, isArchived, userId, isNewestModeActive)),
+    archiveNote: (noteId, userId, isNewestModeActive) =>
+      dispatch(archiveNote(noteId, userId, isNewestModeActive)),
+    copyNote: (note, userId, isNewestModeActive) =>
+      dispatch(copyNote(note, userId, isNewestModeActive)),
+    pinNote: (noteId, source, userId, isNewestModeActive) =>
+      dispatch(pinNote(noteId, source, userId, isNewestModeActive)),
+    unPinNote: (noteId, userId, isNewestModeActive) =>
+      dispatch(unPinNote(noteId, userId, isNewestModeActive)),
   };
 };
 

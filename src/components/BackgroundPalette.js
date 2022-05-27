@@ -24,7 +24,10 @@ const BackgroundPalette = ({
     else handleImgKey(selectedImgKey);
   };
   return (
-    <div className={`backgroundPaletteCon ${theme}`}>
+    <div
+      className={`backgroundPaletteCon ${theme}`}
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="backgroundColorCon">
         {colors.map((color, index) => {
           if (index) {
