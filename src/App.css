@@ -375,7 +375,8 @@
   width: calc(100vw - clamp(16rem, 22vw, 20rem));
   min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
   /* border: 1px solid green; */
-  padding: 2rem 3rem;
+  padding: 2rem 0.6rem;
+  background-color: grey;
 }
 
 .createNoteCon  {
@@ -878,7 +879,8 @@
 .trashedBody, .archivedBody, .pinnedNotesBody, .unPinnedNotesBody  {
   width: 100%;
   display: grid;
-  justify-content: flex-start;
+  justify-content: center;
+  /* align-items: center; */
   grid-template-columns: repeat(auto-fit, 20rem);
   /* grid-auto-rows: auto; */
   grid-auto-rows: minmax(4rem, max-content);
