@@ -163,7 +163,11 @@ const Archived = ({
                   <div className="info">Pin</div>
                 </div>
               </div>
-              <div className="description">{archivedNote.description}</div>
+              <div className="description">
+                {archivedNote.description.length > 100
+                  ? archivedNote.description.slice(0, 99) + "..."
+                  : archivedNote.description}
+              </div>
               <div className="actions">
                 <div className="left">
                   <div

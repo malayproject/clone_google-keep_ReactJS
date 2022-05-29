@@ -84,7 +84,11 @@ const Trashed = ({
               <div className="header">
                 <div className="title">{trashedNote.title}</div>
               </div>
-              <div className="description">{trashedNote.description}</div>
+              <div className="description">
+                {trashedNote.description.length > 100
+                  ? trashedNote.description.slice(0, 99) + "..."
+                  : trashedNote.description}
+              </div>
               <div className="actions">
                 <div className="left">
                   <div

@@ -185,7 +185,11 @@ const Notes = ({
                       <div className="info">Unpin</div>
                     </div>
                   </div>
-                  <div className="description">{pinnedNote.description}</div>
+                  <div className="description">
+                    {pinnedNote.description.length > 100
+                      ? pinnedNote.description.slice(0, 99) + "..."
+                      : pinnedNote.description}
+                  </div>
                   <div className="actions">
                     <div className="left">
                       <div
@@ -326,7 +330,11 @@ const Notes = ({
                       <div className="info">Pin</div>
                     </div>
                   </div>
-                  <div className="description">{unPinnedNote.description}</div>
+                  <div className="description">
+                    {unPinnedNote.description.length > 100
+                      ? unPinnedNote.description.slice(0, 99) + "..."
+                      : unPinnedNote.description}
+                  </div>
                   <div className="actions">
                     <div className="left">
                       <div

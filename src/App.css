@@ -227,7 +227,7 @@
   font-size: 0.8rem;
   background-color: rgb(75, 75, 75);
   width: max-content;
-  top: 3rem;
+  top: 2.6rem;
   color: rgb(230, 230, 230);
   border-radius: 0.3rem;
   word-wrap: normal;
@@ -376,7 +376,7 @@
   min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
   /* border: 1px solid green; */
   padding: 2rem 0.6rem;
-  background-color: grey;
+  /* background-color: grey; */
 }
 
 .createNoteCon  {
@@ -886,15 +886,17 @@
   grid-auto-rows: minmax(4rem, max-content);
   grid-auto-flow: row;
   column-gap: 1.5rem;
-  row-gap: 1rem;
+  row-gap: 1.5rem;
   /* border: 1px solid red; */
 }
 
 .note{
+  position: relative;
   border: 1px solid rgb(168, 168, 168);
   box-shadow: 0rem 0rem 0.3rem rgb(189, 189, 189);
   border-radius: 0.5rem;
   padding: 0.5rem;
+  /* z-index: 0; */
 }
 
 .note:hover  {
@@ -920,7 +922,8 @@
 .note .title {
   font-size: 1.4rem;
   text-align: left;
-  padding: 0 0 0.5rem 0;
+  padding: 0 0 0rem 0;
+  min-height: 2.5rem;
   max-height: 6rem;
   font-weight: 500;
   letter-spacing: 0.05rem;
@@ -929,15 +932,20 @@
 .note .description {
   font-size: 1.2rem;
   text-align: left;
-  padding: 0 0 0.5rem 0;
-  max-height: 6rem;
+  padding: 0rem 0 7rem 0;
+  min-height: 2rem;
+  max-height: 6.5rem;
 }
 
 .note .actions {
+  /* position: absolute; */
+  bottom: 0.2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 1rem 0 0 0;
+  padding: 0rem 0 0 0;
+  /* filter: blur(0.1rem);
+  z-index: 1; */
 }
 
 .note .actions .left{
@@ -976,6 +984,7 @@
 }
  
 .note .iconCon{
+  position: relative;
   width: clamp(2rem, 3.5vw, 2.1rem);
   height: clamp(2rem, 3.5vw, 2.1rem);
   display: flex;
