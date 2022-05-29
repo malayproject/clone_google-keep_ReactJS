@@ -1,6 +1,5 @@
 ## Links
 
-[Source code repository Link](https://github.com/malayproject/clone_google-keep_ReactJS)\
 [App publish link](https://malayproject-keep.netlify.app/)
 
 ## Homepage
