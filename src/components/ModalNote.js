@@ -63,7 +63,12 @@ const ModalNote = ({
 
   const handleDescriptionHeightGrowth = (e) => {
     e.target.style.height = "inherit";
-    e.target.style.height = `${Math.min(e.target.scrollHeight + 20, 200)}px`;
+    e.target.style.height = `${Math.min(e.target.scrollHeight + 20, 280)}px`;
+    console.dir(e.target.parentNode);
+    e.target.parentNode.style.height = `${Math.min(
+      e.target.style.height + 70,
+      270
+    )}px`;
   };
 
   const handleNoteBackground = (e) => {
