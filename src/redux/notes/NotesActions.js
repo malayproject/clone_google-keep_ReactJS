@@ -415,7 +415,7 @@ export const deleteForever = (noteId, source, userId, isNewestModeActive) => {
         dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
       else if (source === "archive")
         dispatch(getAndSetArchivedNotes(userId, isNewestModeActive));
-      else dispatch(getTrashedNotes(userId));
+      else dispatch(getTrashedNotes(userId, isNewestModeActive));
       createNotification("NOTE_DELETED_FOREVER")();
     } catch (error) {
       console.log(error.message);
@@ -438,7 +438,7 @@ export const deleteModalForever = (
         dispatch(getAndSetActiveNotes(userId, isNewestModeActive));
       else if (source === "archive")
         dispatch(getAndSetArchivedNotes(userId, isNewestModeActive));
-      else dispatch(getTrashedNotes(userId));
+      else dispatch(getTrashedNotes(userId, isNewestModeActive));
       dispatch(resetAndHideModalNote());
       createNotification("NOTE_DELETED_FOREVER")();
     } catch (error) {

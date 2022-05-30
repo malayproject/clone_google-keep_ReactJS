@@ -90,14 +90,18 @@ const ModalNote = ({
   const handleTitleChange = (e) => {
     setModalNoteState((prev) => {
       console.log(e.target.innerText);
-      return { ...prev, title: e.target.value };
+      return { ...prev, title: e.target.value, editedOn: new Date().valueOf() };
     });
   };
 
   const handleDescriptionChange = (e) => {
     setModalNoteState((prev) => {
       console.log(e.target.innerText);
-      return { ...prev, description: e.target.value };
+      return {
+        ...prev,
+        description: e.target.value,
+        editedOn: new Date().valueOf(),
+      };
     });
   };
 
