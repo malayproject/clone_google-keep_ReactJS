@@ -2,16 +2,16 @@
 
 [App publish link](https://malayproject-keep.netlify.app/)
 
-## Homepage
-
-<p align="center">
-  <img src="./screenshots/keep-homepage.JPG" />
-</p>
-
 ## Loginpage
 
 <p align="center">
   <img src="./screenshots/keep-loginpage.JPG" />
+</p>
+
+## Homepage
+
+<p align="center">
+  <img src="./screenshots/keep-homepage.JPG" />
 </p>
 
 ## Settings modal
