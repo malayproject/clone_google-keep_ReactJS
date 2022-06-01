@@ -277,7 +277,7 @@
 .sidebar.collapsed  {
   /* width: clamp(6rem, 6.6vw, 6.6rem); */
   min-width: 6rem;
-  flex: 0 0 6%;
+  flex: 0 0 6rem;
 }
 
 .sideLink {
@@ -710,7 +710,7 @@
 }
 
 .modalNote  {
-  position: fixed!important;
+  position: fixed !important;
   top: 20rem;
   width: clamp(40rem, 50%, 50rem);
   min-height: 13rem !important;
@@ -1027,7 +1027,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  visibility: hidden;
+  opacity: 0;
+  /* animation: hideIcons 0.4s ease-in-out; */
 }
 
 .modalNote .actions{
@@ -1039,12 +1040,20 @@
   align-items: center;
 }
 
-
-
 .note:hover .iconCon  {
-  visibility: visible;
+  opacity: 1;
+  animation: showIcons .4s ease-in-out;
 }
 
+@keyframes showIcons {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes hideIcons {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
 
 .note .icon  {
   color: grey;
