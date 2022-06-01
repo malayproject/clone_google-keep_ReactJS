@@ -265,7 +265,7 @@
   /* width: clamp(20rem, 22vw, 22rem); */
   /* width: 20%; */
   min-width: 16rem;
-  flex: 0 0 20%;
+  flex: 0 0 clamp(20rem, 22vw, 22rem);
   min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
   display: flex;
   flex-direction: column;
@@ -277,7 +277,7 @@
 .sidebar.collapsed  {
   /* width: clamp(6rem, 6.6vw, 6.6rem); */
   min-width: 6rem;
-  flex: 0 0 6rem;
+  flex: 0 0 clamp(6rem, 6.6vw, 6.6rem);
 }
 
 .sideLink {
