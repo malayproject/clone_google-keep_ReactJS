@@ -262,13 +262,22 @@
 }
 
 .sidebar  {
-  width: clamp(20rem, 22vw, 22rem);
+  /* width: clamp(20rem, 22vw, 22rem); */
+  /* width: 20%; */
+  min-width: 16rem;
+  flex: 0 0 20%;
   min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
   background-color: transparent;
   align-items: center;
+}
+
+.sidebar.collapsed  {
+  /* width: clamp(6rem, 6.6vw, 6.6rem); */
+  min-width: 6rem;
+  flex: 0 0 6%;
 }
 
 .sideLink {
@@ -286,10 +295,6 @@
 .sideLink .icon{
   width: clamp(6rem, 6.6vw, 6.6rem);
   font-size: 1.4rem;
-}
-
-.sidebar.collapsed  {
-  width: clamp(6rem, 6.6vw, 6.6rem);
 }
 
 .sidebar.collapsed .sideLink {
@@ -364,7 +369,8 @@
 } */
 
 .notesCon, .trashedCon, .archivedCon {
-  width: calc(100vw - clamp(16rem, 22vw, 20rem));
+  /* width: calc(100vw - clamp(16rem, 22vw, 20rem)); */
+  flex: 1 0 auto;
   min-height: calc(100vh - clamp(2.8rem, 10vw, 3.5rem));
   /* border: 1px solid green; */
   padding: 2rem 0.6rem;
@@ -704,6 +710,8 @@
 }
 
 .modalNote  {
+  position: fixed!important;
+  top: 20rem;
   width: clamp(40rem, 50%, 50rem);
   min-height: 13rem !important;
   max-height: 60rem;
